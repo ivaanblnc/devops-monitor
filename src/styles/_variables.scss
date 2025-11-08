@@ -1,25 +1,85 @@
 // ═══════════════════════════════════════════════════════════════════
+// CSS CUSTOM PROPERTIES - DYNAMIC THEME SWITCHING
+// ═══════════════════════════════════════════════════════════════════
+
+:root {
+  // Dark mode colors (default)
+  --color-bg-base: #000000;
+  --color-bg-elevated: #0a0a0a;
+  --color-bg-surface: #141414;
+  --color-bg-surface-hover: #1a1a1a;
+  --color-bg-overlay: #1f1f1f;
+  --color-bg-primary: #0a0a0a;
+  --color-bg-secondary: #141414;
+  --color-bg-tertiary: #1a1a1a;
+
+  --color-text-primary: #ededed;
+  --color-text-secondary: #a1a1a1;
+  --color-text-tertiary: #737373;
+  --color-text-disabled: #525252;
+  --color-text-placeholder: #404040;
+
+  --color-border-subtle: rgba(255, 255, 255, 0.06);
+  --color-border-default: rgba(255, 255, 255, 0.1);
+  --color-border-strong: rgba(255, 255, 255, 0.15);
+  --color-border-interactive: rgba(255, 255, 255, 0.2);
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-border-hover: rgba(255, 255, 255, 0.2);
+
+  --color-glass-bg: rgba(20, 20, 20, 0.6);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+}
+
+// Light mode overrides
+body.light-mode {
+  --color-bg-base: #ffffff;
+  --color-bg-elevated: #f9fafb;
+  --color-bg-surface: #f3f4f6;
+  --color-bg-surface-hover: #ececf1;
+  --color-bg-overlay: #f9fafb;
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f9fafb;
+  --color-bg-tertiary: #f3f4f6;
+
+  --color-text-primary: #111827;
+  --color-text-secondary: #6b7280;
+  --color-text-tertiary: #9ca3af;
+  --color-text-disabled: #d1d5db;
+  --color-text-placeholder: #d1d5db;
+
+  --color-border-subtle: rgba(0, 0, 0, 0.06);
+  --color-border-default: rgba(0, 0, 0, 0.1);
+  --color-border-strong: rgba(0, 0, 0, 0.15);
+  --color-border-interactive: rgba(0, 0, 0, 0.2);
+  --color-border: rgba(0, 0, 0, 0.1);
+  --color-border-hover: rgba(0, 0, 0, 0.2);
+
+  --color-glass-bg: rgba(255, 255, 255, 0.8);
+  --color-glass-border: rgba(0, 0, 0, 0.08);
+}
+
+// ═══════════════════════════════════════════════════════════════════
 // COLOR PALETTE - PREMIUM DARK MODE
 // ═══════════════════════════════════════════════════════════════════
 
 // Background layers (progressive depth)
-$color-bg-base: #000000; // True black base
-$color-bg-elevated: #0a0a0a; // Slightly elevated
-$color-bg-surface: #141414; // Card/surface background
-$color-bg-surface-hover: #1a1a1a; // Hover state
-$color-bg-overlay: #1f1f1f; // Modals, overlays
+$color-bg-base: var(--color-bg-base);
+$color-bg-elevated: var(--color-bg-elevated);
+$color-bg-surface: var(--color-bg-surface);
+$color-bg-surface-hover: var(--color-bg-surface-hover);
+$color-bg-overlay: var(--color-bg-overlay);
 
 // Legacy aliases for compatibility
-$color-bg-primary: #0a0a0a;
-$color-bg-secondary: #141414;
-$color-bg-tertiary: #1a1a1a;
+$color-bg-primary: var(--color-bg-primary);
+$color-bg-secondary: var(--color-bg-secondary);
+$color-bg-tertiary: var(--color-bg-tertiary);
 
 // Text hierarchy (perfect readability)
-$color-text-primary: #ededed; // Main text (near white)
-$color-text-secondary: #a1a1a1; // Secondary text (light gray)
-$color-text-tertiary: #737373; // Tertiary text (medium gray)
-$color-text-disabled: #525252; // Disabled state
-$color-text-placeholder: #404040; // Placeholder text
+$color-text-primary: var(--color-text-primary);
+$color-text-secondary: var(--color-text-secondary);
+$color-text-tertiary: var(--color-text-tertiary);
+$color-text-disabled: var(--color-text-disabled);
+$color-text-placeholder: var(--color-text-placeholder);
 
 // Accent colors (sophisticated palette)
 $color-primary: #3b82f6; // Modern blue (Vercel-like)
@@ -40,16 +100,16 @@ $color-info: #06b6d4; // Cyan
 $color-info-bg: rgba(6, 182, 212, 0.1);
 
 // Borders (subtle but visible)
-$color-border-subtle: rgba(255, 255, 255, 0.06);
-$color-border-default: rgba(255, 255, 255, 0.1);
-$color-border-strong: rgba(255, 255, 255, 0.15);
-$color-border-interactive: rgba(255, 255, 255, 0.2);
-$color-border: rgba(255, 255, 255, 0.1);
-$color-border-hover: rgba(255, 255, 255, 0.2);
+$color-border-subtle: var(--color-border-subtle);
+$color-border-default: var(--color-border-default);
+$color-border-strong: var(--color-border-strong);
+$color-border-interactive: var(--color-border-interactive);
+$color-border: var(--color-border);
+$color-border-hover: var(--color-border-hover);
 
 // Special effects
-$color-glass-bg: rgba(20, 20, 20, 0.6);
-$color-glass-border: rgba(255, 255, 255, 0.08);
+$color-glass-bg: var(--color-glass-bg);
+$color-glass-border: var(--color-glass-border);
 $color-shadow-sm: rgba(0, 0, 0, 0.3);
 $color-shadow-md: rgba(0, 0, 0, 0.4);
 $color-shadow-lg: rgba(0, 0, 0, 0.5);

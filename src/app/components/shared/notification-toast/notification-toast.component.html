@@ -1,0 +1,22 @@
+<div class="notification-container">
+  @for (toast of notificationService.toasts(); track toast.id) {
+    <div class="notification-toast" [class]="'notification-toast--' + toast.type">
+      <div class="notification-toast__content">
+        <span class="notification-toast__icon">{{ getIcon(toast.type) }}</span>
+        <span class="notification-toast__message">{{ toast.message }}</span>
+      </div>
+      @if (toast.action) {
+        <button
+          class="notification-toast__action"
+          (click)="executeAction(toast)">
+          {{ toast.action.label }}
+        </button>
+      }
+      <button
+        class="notification-toast__close"
+        (click)="notificationService.remove(toast.id)">
+        ✕
+      </button>
+    </div>
+  }
+</div>

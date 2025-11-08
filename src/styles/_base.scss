@@ -449,90 +449,10 @@ svg {
 // ═══════════════════════════════════════════════════════════════════
 // LIGHT MODE OVERRIDES
 // ═══════════════════════════════════════════════════════════════════
+// Note: Light mode colors are now defined via CSS custom properties in _variables.scss
+// All color values automatically update through var() functions above
 
 body.light-mode {
-  color: $color-text-primary-light;
-  background: $color-bg-primary-light;
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  strong {
-    color: $color-text-primary-light;
-  }
-
-  p,
-  li,
-  td,
-  dd {
-    color: $color-text-secondary-light;
-  }
-
-  small {
-    color: $color-text-tertiary-light;
-  }
-
-  input,
-  textarea,
-  select {
-    background: $color-bg-secondary-light;
-    color: $color-text-primary-light;
-    border-color: $color-border-light;
-
-    &::placeholder {
-      color: $color-text-tertiary-light;
-    }
-
-    &:hover {
-      border-color: $color-border-hover-light;
-    }
-
-    &:focus {
-      background: white;
-      border-color: $color-primary;
-    }
-  }
-
-  code,
-  pre {
-    background: $color-bg-tertiary-light;
-    color: $color-text-secondary-light;
-    border-color: $color-border-light;
-  }
-
-  table {
-    border-color: $color-border-light;
-  }
-
-  thead {
-    background: $color-bg-secondary-light;
-  }
-
-  th {
-    color: $color-text-primary-light;
-    border-color: $color-border-light;
-  }
-
-  td {
-    color: $color-text-secondary-light;
-    border-color: $color-border-light;
-  }
-
-  tbody tr:hover {
-    background: $color-bg-secondary-light;
-  }
-
-  hr {
-    background: $color-border-light;
-  }
-
-  blockquote {
-    background: $color-bg-secondary-light;
-  }
-
   ::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.1);
 

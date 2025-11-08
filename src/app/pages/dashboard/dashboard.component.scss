@@ -163,10 +163,29 @@
   padding: $space-6;
   transition: all $transition-base;
   animation: fadeInScale $transition-slow ease-out;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(14, 165, 233, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
 
   &:hover {
     border-color: $color-border-default;
-    box-shadow: $shadow-md;
+    box-shadow: $shadow-lg;
+    transform: translateY(-4px);
+
+    app-chart {
+      filter: brightness(1.05);
+    }
   }
 
   @include max-width('md') {
@@ -199,6 +218,7 @@
 .dashboard__chart-body {
   position: relative;
   min-height: 280px;
+  z-index: 1;
 
   @include max-width('md') {
     min-height: 220px;

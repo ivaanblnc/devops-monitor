@@ -62,9 +62,12 @@ export class ServerDetailComponent implements OnInit {
    * Restart server
    */
   restartServer(): void {
-    if (confirm('Are you sure you want to restart this server?')) {
-      this.notificationService.success('Server restart initiated');
-    }
+    this.notificationService.warning('Restart this server?', 0, {
+      label: 'Confirm',
+      callback: () => {
+        this.notificationService.success('Server restart initiated ✓', 5000);
+      },
+    });
   }
 
   /**
@@ -78,10 +81,13 @@ export class ServerDetailComponent implements OnInit {
    * Delete server
    */
   deleteServer(): void {
-    if (confirm('Are you sure you want to delete this server?')) {
-      this.monitoringService.deleteServer(this.serverId()!);
-      this.notificationService.success('Server deleted');
-    }
+    this.notificationService.error('Delete this server permanently?', 0, {
+      label: 'Delete',
+      callback: () => {
+        this.monitoringService.deleteServer(this.serverId()!);
+        this.notificationService.success('Server deleted successfully ✓', 5000);
+      },
+    });
   }
 
   /**

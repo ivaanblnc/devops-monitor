@@ -8,20 +8,20 @@
           <span class="server-detail__status" [ngClass]="'server-detail__status--' + srv.status">
             {{ srv.status | uppercase }}
           </span>
-          <span class="server-detail__location">📍 {{ srv.location }}</span>
+          <span class="server-detail__location"> {{ srv.location }}</span>
           <span class="server-detail__ip">{{ srv.ip }}</span>
         </div>
       </div>
 
       <div class="server-detail__actions">
         <button class="server-detail__btn server-detail__btn--primary" (click)="restartServer()">
-          🔄 Restart
+           Restart
         </button>
         <button class="server-detail__btn server-detail__btn--secondary" (click)="editServer()">
-          ✏️ Edit
+          Edit
         </button>
         <button class="server-detail__btn server-detail__btn--danger" (click)="deleteServer()">
-          🗑️ Delete
+          Delete
         </button>
       </div>
     </div>
@@ -93,7 +93,7 @@
         <h3 class="server-detail__chart-title">Memory Usage</h3>
         <app-chart
           [data]="memoryChart()"
-          type="area"
+          type="line"
           [height]="250">
         </app-chart>
       </div>

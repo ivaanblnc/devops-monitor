@@ -120,23 +120,27 @@
   border-radius: $radius-xl;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  max-height: calc(100vh - 180px);
+  overflow-y: auto;
   @include custom-scrollbar;
 
   @include max-width('md') {
     position: fixed;
-    left: 0;
     top: 0;
+    left: 0;
+    right: 0;
     bottom: 0;
-    width: 320px;
-    max-width: 85vw;
-    z-index: $z-offcanvas;
+    z-index: 1000;
+    max-height: 100%;
+    border-radius: 0;
     transform: translateX(-100%);
-    transition: transform $transition-base;
-    box-shadow: $shadow-2xl;
-    overflow-y: auto;
+    transition: transform $transition-base ease-in-out;
+    padding: $space-8;
+    margin-top: 0;
 
     &--open {
       transform: translateX(0);
+      box-shadow: $shadow-xl;
     }
   }
 }
@@ -353,13 +357,23 @@
 .logs__content {
   display: flex;
   flex-direction: column;
-  gap: $space-4;
+  gap: $space-6;
+  background: $color-bg-surface;
+  border: 1px solid $color-border-subtle;
+  border-radius: $radius-xl;
+  padding: $space-6;
+  animation: fadeIn $transition-base ease-out;
+
+  @include max-width('md') {
+    padding: $space-4;
+    gap: $space-4;
+  }
 }
 
 .logs__toolbar {
   @include flex-between;
   padding: $space-4;
-  background: $color-bg-surface;
+  background: $color-bg-elevated;
   border: 1px solid $color-border-subtle;
   border-radius: $radius-lg;
   gap: $space-4;
@@ -428,17 +442,28 @@
 .logs__list {
   display: flex;
   flex-direction: column;
-  gap: $space-2;
-  padding: $space-4;
-  background: $color-bg-surface;
-  border: 1px solid $color-border-subtle;
-  border-radius: $radius-xl;
-  max-height: 70vh;
+  gap: $space-3;
+  padding: $space-3;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  min-height: 300px;
+  max-height: calc(100vh - 450px);
   overflow-y: auto;
+  flex: 1;
   @include custom-scrollbar;
 
   &:empty {
     min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    &::after {
+      content: 'Sin registros para mostrar';
+      color: $color-text-tertiary;
+      font-size: $font-size-sm;
+    }
   }
 }
 
@@ -449,40 +474,43 @@
 .logs__entry {
   padding: $space-4;
   background: $color-bg-elevated;
-  border: 1px solid;
+  border: 2px solid;
   border-radius: $radius-lg;
   transition: all $transition-base;
   cursor: pointer;
+  animation: fadeIn $transition-base ease-out;
 
   // Log level variants
   &--debug {
-    border-color: rgba($color-text-tertiary, 0.3);
-    background: rgba($color-text-tertiary, 0.03);
+    border-color: rgba($color-text-tertiary, 0.2);
+    background: rgba($color-text-tertiary, 0.04);
   }
 
   &--info {
-    border-color: rgba($color-info, 0.3);
-    background: rgba($color-info, 0.05);
+    border-color: rgba($color-info, 0.25);
+    background: rgba($color-info, 0.06);
   }
 
   &--warn {
-    border-color: rgba($color-warning, 0.3);
-    background: rgba($color-warning, 0.05);
+    border-color: rgba($color-warning, 0.25);
+    background: rgba($color-warning, 0.06);
   }
 
   &--error {
-    border-color: rgba($color-error, 0.3);
-    background: rgba($color-error, 0.05);
+    border-color: rgba($color-error, 0.25);
+    background: rgba($color-error, 0.06);
   }
 
   &:hover {
     border-color: currentColor;
-    box-shadow: $shadow-md;
-    transform: translateX(2px);
+    box-shadow: $shadow-lg;
+    transform: translateX(4px);
+    background: $color-bg-surface;
   }
 
   &--expanded {
     border-color: currentColor;
+    box-shadow: $shadow-md;
   }
 }
 
@@ -581,14 +609,18 @@
 // ═══════════════════════════════════════════════════════════════════
 
 .logs__entry-details {
-  margin-top: $space-4;
-  padding-top: $space-4;
-  border-top: 1px solid $color-border-subtle;
+  margin-top: $space-5;
+  padding-top: $space-5;
+  padding-left: $space-4;
+  border-top: 2px solid $color-border-subtle;
+  border-left: 3px solid $color-primary;
+  background: rgba($color-primary, 0.02);
+  border-radius: 0 $radius-lg $radius-lg 0;
   animation: slideUp $transition-base ease-out;
 }
 
 .logs__detail-section {
-  margin-bottom: $space-4;
+  margin-bottom: $space-5;
 
   &:last-child {
     margin-bottom: 0;
@@ -596,12 +628,12 @@
 
   strong {
     display: block;
-    margin-bottom: $space-2;
+    margin-bottom: $space-3;
     font-size: $font-size-xs;
-    font-weight: $font-weight-semibold;
+    font-weight: $font-weight-bold;
     color: $color-text-primary;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
   }
 
   p {
@@ -625,6 +657,7 @@
       line-height: $line-height-relaxed;
       color: $color-success;
       @include custom-scrollbar;
+      max-height: 200px;
     }
   }
 }
@@ -695,18 +728,20 @@
 // ═══════════════════════════════════════════════════════════════════
 
 .logs__pagination {
-  @include flex-center;
+  @include flex-between;
   gap: $space-4;
-  padding: $space-4;
+  padding: $space-5;
   background: $color-bg-surface;
-  border: 1px solid $color-border-subtle;
-  border-radius: $radius-lg;
+  border: 2px solid $color-border-subtle;
+  border-radius: $radius-xl;
+  margin-top: $space-6;
+  animation: slideUp $transition-base ease-out;
 }
 
 .logs__pagination-btn {
-  padding: $space-2 $space-5;
+  padding: $space-3 $space-5;
   background: transparent;
-  border: 1px solid $color-border-default;
+  border: 2px solid $color-border-default;
   border-radius: $radius-lg;
   color: $color-text-primary;
   font-size: $font-size-sm;
@@ -717,18 +752,20 @@
   gap: $space-2;
 
   svg {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
   }
 
   &:hover:not(:disabled) {
-    background: $color-bg-elevated;
+    background: $color-primary-glow;
     border-color: $color-primary;
     color: $color-primary;
+    box-shadow: $shadow-md;
+    transform: translateY(-2px);
   }
 
   &:disabled {
-    opacity: 0.4;
+    opacity: 0.35;
     cursor: not-allowed;
     pointer-events: none;
   }

@@ -1,22 +1,9 @@
-<div class="chart">
+<div class="chart" [style.height.px]="height()">
   <canvas 
-    #chartCanvas 
-    class="chart__canvas"
-    [attr.width]="width()"
-    [attr.height]="height()"
-    (window:resize)="onResize()">
+    baseChart
+    [type]="type()"
+    [data]="chartData()"
+    [options]="getChartOptions()"
+    class="chart__canvas">
   </canvas>
-  @if (data().datasets.length > 1) {
-    <div class="chart__legend">
-      @for (dataset of data().datasets; track dataset.label) {
-        <div class="chart__legend-item">
-          <span 
-            class="chart__legend-color"
-            [style.background-color]="dataset.borderColor || '#0ea5e9'">
-          </span>
-          <span>{{ dataset.label }}</span>
-        </div>
-      }
-    </div>
-  }
 </div>

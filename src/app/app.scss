@@ -14,7 +14,7 @@
   display: flex;
   height: 100vh;
   width: 100%;
-  background: $color-bg-primary;
+  background: var(--color-bg-primary);
 
   @media (max-width: 768px) {
     height: auto;
@@ -68,7 +68,7 @@
 /* Light mode */
 :host-context(.light-mode) {
   .app-wrapper {
-    background: $color-bg-primary;
+    background: var(--color-bg-primary);
   }
 }
 

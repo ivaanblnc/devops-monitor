@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from './components/shared/sidebar/sidebar.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
+import { NotificationToastComponent } from './components/shared/notification-toast/notification-toast.component';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ import { NavbarComponent } from './components/shared/navbar/navbar.component';
     RouterOutlet,
     SidebarComponent,
     NavbarComponent,
+    NotificationToastComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',

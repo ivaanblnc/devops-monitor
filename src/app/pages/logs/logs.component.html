@@ -62,11 +62,6 @@
       <button class="logs__btn-clear" (click)="clearFilters()">Clear All</button>
     </div>
 
-    <!-- Mobile Filter Toggle -->
-    <button class="logs__filter-toggle" (click)="toggleFilters()">
-      🔍 {{ filtersOpen() ? 'Hide' : 'Show' }} Filters
-    </button>
-
     <!-- Right Content - Logs List -->
     <div class="logs__content">
       <!-- Auto-scroll Toggle -->
@@ -77,7 +72,7 @@
         </label>
         @if (newLogsCount() > 0) {
           <button class="logs__new-logs-badge" (click)="scrollToTop()">
-            {{ newLogsCount() }} New Logs ⬆️
+            {{ newLogsCount() }} New Logs 
           </button>
         }
       </div>
@@ -157,4 +152,9 @@
       }
     </div>
   </div>
+
+  <!-- Mobile Filter Toggle (outside container for proper layout) -->
+  <!--<button class="logs__filter-toggle" (click)="toggleFilters()">
+  {{ filtersOpen() ? 'Hide' : 'Show' }} Filters
+  </button> -->
 </div>
