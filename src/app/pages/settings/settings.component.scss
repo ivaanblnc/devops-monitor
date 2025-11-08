@@ -1,78 +1,142 @@
+// ============================================================================
+// Settings Page
+// Modern, professional styling for application settings with accordion sections
+// ============================================================================
+
 .settings {
-  padding: var(--space-6);
-  animation: fadeIn 0.5s ease-in;
-  max-width: 900px;
+  padding: $space-8;
+  max-width: 1000px;
   margin: 0 auto;
+  animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
   @media (max-width: 768px) {
-    padding: var(--space-4);
+    padding: $space-5;
   }
 
-  h1 {
-    margin: 0 0 var(--space-6) 0;
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--color-text-primary);
+  @media (max-width: 480px) {
+    padding: $space-4;
   }
 }
+
+// Header
+// ============================================================================
 
 .settings__header {
-  margin-bottom: var(--space-8);
+  margin-bottom: $space-8;
+
+  h1 {
+    margin: 0 0 $space-2 0;
+    font-size: 2rem;
+    font-weight: 600;
+    color: $color-text-primary;
+    letter-spacing: -0.02em;
+
+    @media (max-width: 768px) {
+      font-size: 1.75rem;
+    }
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: $color-text-secondary;
+    line-height: 1.6;
+  }
 }
+
+// Container
+// ============================================================================
 
 .settings__container {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
-  margin-bottom: var(--space-8);
+  gap: $space-3;
+  margin-bottom: $space-6;
 }
 
+// Section (Accordion Item)
+// ============================================================================
+
 .settings__section {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: var(--radius-lg);
-  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  background: $color-bg-secondary;
+  border-radius: $radius-lg;
+  border: 1px solid $color-border;
   overflow: hidden;
-  animation: slideDown 0.3s ease;
-  box-shadow: var(--shadow-sm);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    border-color: $color-border-hover;
+  }
+
+  &--expanded {
+    box-shadow: $shadow-md;
+  }
 }
+
+// Accordion Header
+// ============================================================================
 
 .settings__accordion-header {
   width: 100%;
-  padding: var(--space-6);
-  background: linear-gradient(135deg, rgba(6, 182, 212, 0.03), rgba(14, 165, 233, 0.02));
+  padding: $space-5;
+  background: transparent;
   border: none;
-  border-bottom: 1.5px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid transparent;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  transition: all 0.3s ease;
+  gap: $space-3;
+  transition: background-color 0.2s ease;
 
   &:hover {
-    background: linear-gradient(135deg, rgba(6, 182, 212, 0.08), rgba(14, 165, 233, 0.05));
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  &--expanded {
+    border-bottom-color: $color-border;
+  }
+
+  @media (max-width: 768px) {
+    padding: $space-4;
   }
 }
 
 .settings__accordion-icon {
-  color: var(--color-accent);
-  font-size: 0.8rem;
+  color: $color-text-secondary;
+  font-size: 0.75rem;
   min-width: 12px;
-  font-weight: 700;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease;
+
+  .settings__accordion-header--expanded & {
+    transform: rotate(90deg);
+    color: $color-accent;
+  }
 }
 
 .settings__accordion-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--color-text-primary);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: $color-text-primary;
+  letter-spacing: -0.01em;
 }
+
+// Accordion Content
+// ============================================================================
 
 .settings__accordion-content {
-  padding: var(--space-6);
-  animation: slideDown 0.3s ease;
+  padding: $space-6;
+  animation: expandAccordion 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  @media (max-width: 768px) {
+    padding: $space-5;
+  }
 }
 
+// Form Fields
+// ============================================================================
+
 .settings__field {
-  margin-bottom: var(--space-6);
+  margin-bottom: $space-6;
 
   &:last-child {
     margin-bottom: 0;
@@ -81,213 +145,49 @@
 
 .settings__label {
   display: block;
-  margin-bottom: var(--space-2);
-  font-weight: 700;
-  color: var(--color-text-primary);
-  font-size: 0.95rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  margin-bottom: $space-2;
+  font-weight: 500;
+  color: $color-text-primary;
+  font-size: 0.875rem;
+  letter-spacing: -0.01em;
 }
+
+.settings__description {
+  display: block;
+  margin-top: $space-1;
+  font-size: 0.8125rem;
+  color: $color-text-secondary;
+  line-height: 1.5;
+}
+
+// Input & Select
+// ============================================================================
 
 .settings__input,
 .settings__select {
   width: 100%;
-  padding: var(--space-3) var(--space-4);
-  background: var(--color-bg-secondary);
-  border: 1.5px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--radius-md);
-  color: var(--color-text-primary);
-  font-size: 0.95rem;
-  transition: all 0.3s ease;
+  padding: $space-3 $space-4;
+  background: $color-bg-tertiary;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  color: $color-text-primary;
+  font-size: 0.875rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 
   &:hover {
-    border-color: rgba(255, 255, 255, 0.15);
+    border-color: $color-border-hover;
   }
 
   &:focus {
     outline: none;
-    border-color: var(--color-accent);
-    box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.15);
+    border-color: $color-accent;
+    background: $color-bg-secondary;
+    box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
   }
 
   &::placeholder {
-    color: var(--color-text-secondary);
-  }
-}
-
-.settings__search-box {
-  margin-bottom: var(--space-2);
-}
-
-.settings__slider-group {
-  display: flex;
-  gap: var(--space-3);
-  align-items: center;
-}
-
-.settings__slider {
-  flex: 1;
-  height: 6px;
-  border-radius: 3px;
-  background: linear-gradient(
-    to right,
-    #0ea5e9 0%,
-    #0ea5e9 calc(var(--value, 50) * 1%),
-    rgba(255, 255, 255, 0.1) calc(var(--value, 50) * 1%),
-    rgba(255, 255, 255, 0.1) 100%
-  );
-  outline: none;
-  -webkit-appearance: none;
-
-  &::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: #0ea5e9;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(14, 165, 233, 0.4);
-    transition: all 0.2s ease;
-
-    &:hover {
-      width: 20px;
-      height: 20px;
-      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.6);
-    }
-  }
-
-  &::-moz-range-thumb {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: #0ea5e9;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(14, 165, 233, 0.4);
-    border: none;
-    transition: all 0.2s ease;
-
-    &:hover {
-      width: 20px;
-      height: 20px;
-      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.6);
-    }
-  }
-}
-
-.settings__slider-value {
-  min-width: 50px;
-  padding: var(--space-2) var(--space-3);
-  background: rgba(14, 165, 233, 0.1);
-  border-radius: var(--radius-sm);
-  color: #0ea5e9;
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
-.settings__checkbox {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  gap: var(--space-2);
-  margin-bottom: var(--space-2);
-
-  input[type='checkbox'] {
-    cursor: pointer;
-    width: 18px;
-    height: 18px;
-  }
-
-  span {
-    color: var(--color-text-primary);
-    font-size: 0.95rem;
-  }
-}
-
-.settings__radio-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-
-.settings__radio {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  gap: var(--space-2);
-
-  input[type='radio'] {
-    cursor: pointer;
-    width: 16px;
-    height: 16px;
-  }
-
-  span {
-    color: var(--color-text-primary);
-    font-size: 0.95rem;
-  }
-}
-
-.settings__time-range {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: var(--space-3);
-  align-items: center;
-
-  span {
-    text-align: center;
-    color: var(--color-text-secondary);
-    font-weight: 600;
-  }
-}
-
-.settings__btn-test {
-  margin-top: var(--space-2);
-  padding: var(--space-2) var(--space-4);
-  background: rgba(14, 165, 233, 0.1);
-  border: 1px solid #0ea5e9;
-  border-radius: var(--radius-sm);
-  color: #0ea5e9;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background: rgba(14, 165, 233, 0.2);
-  }
-}
-
-.settings__footer {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  padding: var(--space-4);
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: var(--radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  position: sticky;
-  bottom: 0;
-  animation: slideUp 0.3s ease;
-
-  &--dirty {
-    border-color: rgba(16, 185, 129, 0.5);
-    background: rgba(16, 185, 129, 0.05);
-  }
-}
-
-.settings__btn-save {
-  padding: var(--space-2) var(--space-6);
-  background: #10b981;
-  border: none;
-  border-radius: var(--radius-sm);
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    color: $color-text-tertiary;
   }
 
   &:disabled {
@@ -296,39 +196,348 @@
   }
 }
 
-.settings__unsaved-msg {
-  color: #f59e0b;
-  font-size: 0.9rem;
-  font-weight: 600;
+.settings__select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23666' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right $space-4 center;
+  padding-right: $space-8;
 }
+
+.settings__search-box {
+  margin-bottom: $space-3;
+}
+
+// Slider
+// ============================================================================
+
+.settings__slider-group {
+  display: flex;
+  gap: $space-3;
+  align-items: center;
+}
+
+.settings__slider {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: $color-border;
+  outline: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: $color-accent;
+    cursor: grab;
+    border: 2px solid $color-bg-primary;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: scale(1.15);
+      box-shadow: 0 2px 8px rgba(6, 182, 212, 0.4);
+    }
+
+    &:active {
+      cursor: grabbing;
+      transform: scale(1.1);
+    }
+  }
+
+  &::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: $color-accent;
+    cursor: grab;
+    border: 2px solid $color-bg-primary;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: scale(1.15);
+      box-shadow: 0 2px 8px rgba(6, 182, 212, 0.4);
+    }
+
+    &:active {
+      cursor: grabbing;
+      transform: scale(1.1);
+    }
+  }
+
+  &::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    background: transparent;
+  }
+
+  &::-moz-range-track {
+    width: 100%;
+    height: 4px;
+    background: transparent;
+  }
+}
+
+.settings__slider-value {
+  min-width: 48px;
+  padding: $space-2 $space-3;
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  border-radius: $radius-sm;
+  color: $color-accent;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+// Checkbox
+// ============================================================================
+
+.settings__checkbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: $space-3;
+  margin-bottom: $space-3;
+  padding: $space-2;
+  border-radius: $radius-sm;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  input[type='checkbox'] {
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: $color-accent;
+  }
+
+  span {
+    color: $color-text-primary;
+    font-size: 0.875rem;
+  }
+}
+
+// Radio Group
+// ============================================================================
+
+.settings__radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.settings__radio {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: $space-3;
+  padding: $space-2;
+  border-radius: $radius-sm;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  input[type='radio'] {
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: $color-accent;
+  }
+
+  span {
+    color: $color-text-primary;
+    font-size: 0.875rem;
+  }
+}
+
+// Time Range
+// ============================================================================
+
+.settings__time-range {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: $space-3;
+  align-items: center;
+
+  span {
+    text-align: center;
+    color: $color-text-tertiary;
+    font-weight: 500;
+    font-size: 0.875rem;
+  }
+}
+
+// Test Button
+// ============================================================================
+
+.settings__btn-test {
+  margin-top: $space-3;
+  padding: $space-2 $space-4;
+  background: transparent;
+  border: 1px solid $color-accent;
+  border-radius: $radius-md;
+  color: $color-accent;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    background: rgba(6, 182, 212, 0.1);
+    border-color: lighten($color-accent, 10%);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// Footer (Save Bar)
+// ============================================================================
+
+.settings__footer {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+  padding: $space-4 $space-5;
+  background: $color-bg-secondary;
+  border-radius: $radius-lg;
+  border: 1px solid $color-border;
+  position: sticky;
+  bottom: $space-4;
+  animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: $shadow-lg;
+
+  &--dirty {
+    border-color: rgba(16, 185, 129, 0.3);
+    background: rgba(16, 185, 129, 0.05);
+  }
+
+  @media (max-width: 768px) {
+    padding: $space-3 $space-4;
+    flex-wrap: wrap;
+  }
+}
+
+.settings__btn-save {
+  padding: $space-3 $space-6;
+  background: $color-success;
+  border: none;
+  border-radius: $radius-md;
+  color: white;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: darken($color-success, 5%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.settings__btn-cancel {
+  padding: $space-3 $space-5;
+  background: transparent;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  color: $color-text-secondary;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: $color-border-hover;
+    color: $color-text-primary;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.settings__unsaved-msg {
+  color: $color-warning;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+
+  &::before {
+    content: '●';
+    font-size: 0.625rem;
+  }
+}
+
+// Animations
+// ============================================================================
 
 @keyframes fadeIn {
   from {
     opacity: 0;
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@keyframes slideDown {
+@keyframes expandAccordion {
   from {
-    transform: translateY(-10px);
     opacity: 0;
+    transform: translateY(-8px);
   }
   to {
-    transform: translateY(0);
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @keyframes slideUp {
   from {
-    transform: translateY(10px);
     opacity: 0;
+    transform: translateY(16px);
   }
   to {
-    transform: translateY(0);
     opacity: 1;
+    transform: translateY(0);
   }
 }

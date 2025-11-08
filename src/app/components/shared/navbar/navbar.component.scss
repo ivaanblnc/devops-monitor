@@ -1,3 +1,8 @@
+// ============================================================================
+// Navbar Component
+// Mobile-only top navigation bar with menu toggle and notifications
+// ============================================================================
+
 .navbar {
   display: none;
   position: fixed;
@@ -5,59 +10,104 @@
   left: 0;
   right: 0;
   height: 60px;
-  background: var(--color-bg-secondary);
-  border-bottom: 1px solid var(--color-border);
+  background: $color-bg-secondary;
+  border-bottom: 1px solid $color-border;
   z-index: 1020;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 var(--space-4);
-  gap: var(--space-4);
+  backdrop-filter: blur(8px);
 
   @media (max-width: 768px) {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 $space-4;
+    gap: $space-3;
   }
 }
+
+// Menu Button
+// ============================================================================
 
 .navbar__menu-btn {
-  background: none;
-  border: none;
-  color: var(--color-text-primary);
-  font-size: 1.5rem;
+  background: transparent;
+  border: 1px solid $color-border;
+  color: $color-text-primary;
+  font-size: 1.25rem;
   cursor: pointer;
-  padding: var(--space-2);
-  transition: all var(--transition-base);
+  padding: $space-2;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-md;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 
   &:hover {
-    color: var(--color-accent);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: $color-border-hover;
+    color: $color-accent;
+  }
+
+  &:active {
+    transform: scale(0.95);
   }
 }
+
+// Title
+// ============================================================================
 
 .navbar__title {
   flex: 1;
   font-size: 1rem;
   font-weight: 600;
-  color: var(--color-text-primary);
+  color: $color-text-primary;
   text-align: center;
+  letter-spacing: -0.01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 $space-2;
 }
+
+// Actions
+// ============================================================================
 
 .navbar__actions {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: $space-2;
 }
 
 .navbar__action {
   position: relative;
-  background: none;
-  border: none;
-  color: var(--color-text-primary);
-  font-size: 1.25rem;
+  background: transparent;
+  border: 1px solid $color-border;
+  color: $color-text-primary;
+  font-size: 1.125rem;
   cursor: pointer;
-  padding: var(--space-2);
-  transition: all var(--transition-base);
+  padding: $space-2;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-md;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 
   &:hover {
-    color: var(--color-accent);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: $color-border-hover;
+    color: $color-accent;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &--active {
+    background: rgba(6, 182, 212, 0.1);
+    border-color: rgba(6, 182, 212, 0.3);
+    color: $color-accent;
   }
 }
 
@@ -68,47 +118,74 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
-  background: var(--color-error);
-  border-radius: 50%;
-  font-size: 0.75rem;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  background: $color-error;
+  border-radius: 9px;
+  font-size: 0.6875rem;
   color: white;
-  font-weight: 700;
+  font-weight: 600;
+  line-height: 1;
+  border: 2px solid $color-bg-secondary;
+  font-variant-numeric: tabular-nums;
 }
+
+// Avatar
+// ============================================================================
 
 .navbar__avatar {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: var(--color-accent);
+  background: linear-gradient(135deg, $color-accent, darken($color-accent, 10%));
+  border: 2px solid $color-border;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    border-color: $color-accent;
+  }
+
+  &:active {
+    transform: scale(1);
+  }
 }
 
-/* Notifications Dropdown */
+// Notifications Dropdown
+// ============================================================================
+
 .navbar__notifications {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 8px);
   right: 0;
-  width: 320px;
-  background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  width: 360px;
+  max-width: calc(100vw - 32px);
+  background: $color-bg-primary;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-xl;
   z-index: 1030;
   opacity: 0;
   visibility: hidden;
   transform: translateY(-8px);
-  transition: opacity var(--transition-base), transform var(--transition-base),
-    visibility var(--transition-base);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
 
   &.is-open {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
+  }
+
+  @media (max-width: 480px) {
+    width: 320px;
   }
 }
 
@@ -116,94 +193,239 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--space-4);
-  border-bottom: 1px solid var(--color-border);
+  padding: $space-4;
+  border-bottom: 1px solid $color-border;
 
   h3 {
     margin: 0;
-    font-size: 1rem;
+    font-size: 0.9375rem;
     font-weight: 600;
+    color: $color-text-primary;
+    letter-spacing: -0.01em;
   }
 }
 
 .navbar__close-btn {
-  background: none;
-  border: none;
-  color: var(--color-text-secondary);
-  font-size: 1.25rem;
+  background: transparent;
+  border: 1px solid $color-border;
+  color: $color-text-secondary;
+  font-size: 1rem;
   cursor: pointer;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-md;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 
   &:hover {
-    color: var(--color-text-primary);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: $color-border-hover;
+    color: $color-text-primary;
+  }
+
+  &:active {
+    transform: scale(0.95);
   }
 }
 
 .navbar__notifications-body {
-  max-height: 300px;
+  max-height: 400px;
   overflow-y: auto;
-  padding: var(--space-3) 0;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+  }
 }
 
 .navbar__notification-item {
   display: flex;
-  gap: var(--space-3);
-  padding: var(--space-3) var(--space-4);
+  gap: $space-3;
+  padding: $space-4;
   cursor: pointer;
-  transition: background var(--transition-base);
-  border-left: 4px solid transparent;
+  transition: background-color 0.2s ease;
+  border-left: 3px solid transparent;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: currentColor;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
 
   &:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.03);
   }
 
-  &--success {
-    border-left-color: var(--color-success);
+  &--unread {
+    background: rgba(6, 182, 212, 0.05);
   }
 
-  &--error {
-    border-left-color: var(--color-error);
+  &--success::after {
+    color: $color-success;
   }
 
-  &--warning {
-    border-left-color: var(--color-warning);
+  &--error::after {
+    color: $color-error;
   }
 
-  &--info {
-    border-left-color: var(--color-info);
+  &--warning::after {
+    color: $color-warning;
+  }
+
+  &--info::after {
+    color: $color-accent;
+  }
+
+  &:hover::after {
+    opacity: 1;
   }
 }
 
-.navbar__notification-type {
-  font-size: 1.25rem;
+.navbar__notification-icon {
   flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-md;
+  font-size: 1rem;
+
+  .navbar__notification-item--success & {
+    background: rgba(16, 185, 129, 0.15);
+    color: $color-success;
+  }
+
+  .navbar__notification-item--error & {
+    background: rgba(239, 68, 68, 0.15);
+    color: $color-error;
+  }
+
+  .navbar__notification-item--warning & {
+    background: rgba(245, 158, 11, 0.15);
+    color: $color-warning;
+  }
+
+  .navbar__notification-item--info & {
+    background: rgba(6, 182, 212, 0.15);
+    color: $color-accent;
+  }
 }
 
-.navbar__notification-message {
+.navbar__notification-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.navbar__notification-title {
   font-size: 0.875rem;
-  color: var(--color-text-secondary);
+  font-weight: 600;
+  color: $color-text-primary;
+  margin: 0 0 $space-1 0;
   line-height: 1.4;
 }
 
+.navbar__notification-message {
+  font-size: 0.8125rem;
+  color: $color-text-secondary;
+  line-height: 1.5;
+  margin: 0 0 $space-1 0;
+}
+
+.navbar__notification-time {
+  font-size: 0.75rem;
+  color: $color-text-tertiary;
+  margin: 0;
+}
+
 .navbar__notifications-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
   text-align: center;
-  padding: var(--space-6) var(--space-4);
-  color: var(--color-text-tertiary);
+  padding: $space-8 $space-4;
+  color: $color-text-tertiary;
   font-size: 0.875rem;
   margin: 0;
 }
 
+.navbar__notifications-empty-icon {
+  font-size: 2rem;
+  opacity: 0.5;
+  margin-bottom: $space-2;
+}
+
 .navbar__notifications-footer {
   display: block;
-  padding: var(--space-4);
+  padding: $space-3;
   text-align: center;
-  border-top: 1px solid var(--color-border);
-  color: var(--color-accent);
+  border-top: 1px solid $color-border;
+  color: $color-accent;
   text-decoration: none;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: all var(--transition-base);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
 
   &:hover {
-    background: rgba(14, 165, 233, 0.1);
+    background: rgba(6, 182, 212, 0.05);
+  }
+}
+
+// Overlay for closing dropdown on mobile
+// ============================================================================
+
+.navbar__overlay {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1019;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+
+  &.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+// Animations
+// ============================================================================
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

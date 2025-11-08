@@ -1,34 +1,82 @@
-* {
+// ═══════════════════════════════════════════════════════════════════
+// BASE STYLES - FOUNDATION & RESETS
+// ═══════════════════════════════════════════════════════════════════
+
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
 html {
   font-size: 16px;
-  @include smooth-scroll;
+  scroll-behavior: smooth;
   scroll-padding-top: $navbar-height;
+  height: 100%;
 }
 
 body {
+  min-height: 100%;
   font-family: $font-family-base;
   font-size: $font-size-base;
   line-height: $line-height-normal;
   letter-spacing: $letter-spacing-normal;
   color: $color-text-primary;
-  background: $color-bg-primary;
+  background: $color-bg-base;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  position: relative;
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// TYPOGRAPHY
+// PREMIUM SCROLLBARS - SUBTLE & ELEGANT
+// ═══════════════════════════════════════════════════════════════════
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $color-border-subtle;
+  border-radius: $radius-full;
+  transition: background $transition-base;
+
+  &:hover {
+    background: $color-border-default;
+  }
+}
+
+// Firefox scrollbar styling
+* {
+  scrollbar-width: thin;
+  scrollbar-color: $color-border-subtle transparent;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// TEXT SELECTION - BRANDED
+// ═══════════════════════════════════════════════════════════════════
+
+::selection {
+  background: rgba($color-primary, 0.2);
+  color: $color-text-primary;
+}
+
+::-moz-selection {
+  background: rgba($color-primary, 0.2);
+  color: $color-text-primary;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// TYPOGRAPHY - PROFESSIONAL HIERARCHY
 // ═══════════════════════════════════════════════════════════════════
 
 h1,
@@ -39,20 +87,25 @@ h5,
 h6 {
   font-weight: $font-weight-semibold;
   line-height: $line-height-tight;
+  letter-spacing: $letter-spacing-tight;
   color: $color-text-primary;
-  margin-bottom: $space-4;
+  margin: 0 0 $space-4 0;
 }
 
 h1 {
   font-size: $font-size-4xl;
+  font-weight: $font-weight-bold;
+  letter-spacing: -0.02em;
 }
 
 h2 {
   font-size: $font-size-3xl;
+  letter-spacing: -0.018em;
 }
 
 h3 {
   font-size: $font-size-2xl;
+  letter-spacing: -0.016em;
 }
 
 h4 {
@@ -64,11 +117,12 @@ h5 {
 }
 
 h6 {
-  font-size: $font-size-base;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
 }
 
 p {
-  margin-bottom: $space-4;
+  margin: 0 0 $space-4 0;
   line-height: $line-height-relaxed;
   color: $color-text-secondary;
 
@@ -79,30 +133,46 @@ p {
 
 small {
   font-size: $font-size-sm;
+  line-height: $line-height-normal;
   color: $color-text-tertiary;
 }
 
+strong {
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+em {
+  font-style: italic;
+}
+
 // ═══════════════════════════════════════════════════════════════════
-// LINKS
+// LINKS - SUBTLE & MODERN
 // ═══════════════════════════════════════════════════════════════════
 
 a {
-  color: $color-accent;
+  color: $color-primary;
   text-decoration: none;
   transition: color $transition-base;
+  cursor: pointer;
 
   &:hover {
-    color: $color-accent-hover;
-    text-decoration: underline;
+    color: $color-primary-light;
+  }
+
+  &:active {
+    color: $color-primary-dark;
   }
 
   &:focus-visible {
-    @include focus-ring;
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+    border-radius: $radius-xs;
   }
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// BUTTONS
+// BUTTONS - RESET & BASELINE
 // ═══════════════════════════════════════════════════════════════════
 
 button,
@@ -110,159 +180,274 @@ input[type='button'],
 input[type='submit'],
 input[type='reset'] {
   font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
   cursor: pointer;
   border: none;
   background: none;
   padding: 0;
+  color: inherit;
+  transition: all $transition-base;
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
 
   &:disabled {
     cursor: not-allowed;
-    opacity: 0.5;
+    opacity: 0.4;
+    pointer-events: none;
   }
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// FORMS
+// FORMS - CLEAN & CONSISTENT
 // ═══════════════════════════════════════════════════════════════════
 
 input,
 textarea,
 select {
   @include input-base;
+  
+  &::placeholder {
+    color: $color-text-placeholder;
+    opacity: 1;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+    background: $color-bg-elevated;
+    box-shadow: 0 0 0 3px $color-primary-glow;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: $color-bg-surface;
+  }
 }
 
 textarea {
   resize: vertical;
   min-height: 100px;
+  line-height: $line-height-relaxed;
 }
 
 select {
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239CA3AF' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23737373' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right $space-3 center;
   background-size: 16px;
-  padding-right: $space-12;
+  padding-right: $space-10;
+  cursor: pointer;
 }
 
 label {
   display: block;
   margin-bottom: $space-2;
   font-weight: $font-weight-medium;
-  color: $color-text-primary;
   font-size: $font-size-sm;
+  color: $color-text-primary;
+  line-height: $line-height-normal;
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// CODE BLOCKS
+// CODE BLOCKS - DEVELOPER FRIENDLY
 // ═══════════════════════════════════════════════════════════════════
 
 code,
 pre {
   font-family: $font-family-mono;
-  background: $color-bg-tertiary;
-  border-radius: $radius-base;
+  font-size: $font-size-sm;
+  background: $color-bg-surface;
+  border: 1px solid $color-border-subtle;
   color: $color-text-secondary;
 }
 
 code {
   display: inline-block;
   padding: $space-1 $space-2;
-  font-size: $font-size-sm;
+  border-radius: $radius-sm;
+  font-size: 0.875em;
+  line-height: 1.4;
 }
 
 pre {
   display: block;
   padding: $space-4;
-  margin-bottom: $space-4;
+  margin: 0 0 $space-4 0;
+  border-radius: $radius-lg;
   overflow-x: auto;
+  line-height: $line-height-relaxed;
+  @include custom-scrollbar(6px, $color-bg-surface, $color-border-default);
 
   code {
+    display: block;
     background: none;
+    border: none;
     padding: 0;
     margin: 0;
+    font-size: inherit;
   }
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// LISTS
+// LISTS - STRUCTURED & READABLE
 // ═══════════════════════════════════════════════════════════════════
 
 ul,
 ol {
-  margin-bottom: $space-4;
+  margin: 0 0 $space-4 0;
   padding-left: $space-6;
+  color: $color-text-secondary;
 }
 
 li {
   margin-bottom: $space-2;
+  line-height: $line-height-relaxed;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+ul {
+  list-style-type: disc;
+}
+
+ol {
+  list-style-type: decimal;
+}
+
+dl {
+  margin-bottom: $space-4;
 }
 
 dt {
   font-weight: $font-weight-semibold;
+  color: $color-text-primary;
   margin-top: $space-3;
+  margin-bottom: $space-1;
+
+  &:first-child {
+    margin-top: 0;
+  }
 }
 
 dd {
-  margin-left: 0;
-  margin-bottom: $space-2;
+  margin: 0 0 $space-2 0;
+  padding-left: $space-4;
   color: $color-text-secondary;
+  line-height: $line-height-relaxed;
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// TABLES
+// TABLES - MODERN & DATA-FOCUSED
 // ═══════════════════════════════════════════════════════════════════
 
 table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   margin-bottom: $space-6;
+  border: 1px solid $color-border-subtle;
+  border-radius: $radius-lg;
+  overflow: hidden;
+}
+
+thead {
+  background: $color-bg-surface;
 }
 
 th {
   text-align: left;
   font-weight: $font-weight-semibold;
-  background: $color-bg-tertiary;
+  font-size: $font-size-sm;
+  color: $color-text-primary;
   padding: $space-3 $space-4;
-  border-bottom: 2px solid $color-border;
+  border-bottom: 1px solid $color-border-default;
+  white-space: nowrap;
 }
 
 td {
   padding: $space-3 $space-4;
-  border-bottom: 1px solid $color-border;
+  color: $color-text-secondary;
+  font-size: $font-size-sm;
+  border-bottom: 1px solid $color-border-subtle;
+  line-height: $line-height-normal;
+}
+
+tbody tr {
+  transition: background $transition-base;
+
+  &:hover {
+    background: $color-bg-elevated;
+  }
+
+  &:last-child td {
+    border-bottom: none;
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// UTILITY ELEMENTS
+// UTILITY ELEMENTS - DIVIDERS & ACCENTS
 // ═══════════════════════════════════════════════════════════════════
 
 hr {
   margin: $space-6 0;
   border: none;
-  border-top: 1px solid $color-border;
+  height: 1px;
+  background: $color-border-subtle;
 }
 
 blockquote {
   margin: 0 0 $space-4 0;
-  padding-left: $space-4;
-  border-left: 4px solid $color-accent;
+  padding: $space-4;
+  padding-left: $space-5;
+  border-left: 3px solid $color-primary;
+  background: $color-bg-surface;
+  border-radius: $radius-md;
   color: $color-text-secondary;
-  font-style: italic;
+  font-style: normal;
+  line-height: $line-height-relaxed;
+
+  p {
+    margin-bottom: 0;
+  }
 }
 
 img {
   max-width: 100%;
   height: auto;
   display: block;
+  border-radius: $radius-md;
 }
 
 svg {
   display: inline-block;
   vertical-align: middle;
+  flex-shrink: 0;
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// LIGHT MODE SUPPORT
+// FOCUS VISIBLE - ACCESSIBILITY
+// ═══════════════════════════════════════════════════════════════════
+
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 2px solid $color-primary;
+  outline-offset: 2px;
+  border-radius: $radius-xs;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// LIGHT MODE OVERRIDES
 // ═══════════════════════════════════════════════════════════════════
 
 body.light-mode {
@@ -274,12 +459,20 @@ body.light-mode {
   h3,
   h4,
   h5,
-  h6 {
+  h6,
+  strong {
     color: $color-text-primary-light;
   }
 
-  p {
+  p,
+  li,
+  td,
+  dd {
     color: $color-text-secondary-light;
+  }
+
+  small {
+    color: $color-text-tertiary-light;
   }
 
   input,
@@ -296,11 +489,59 @@ body.light-mode {
     &:hover {
       border-color: $color-border-hover-light;
     }
+
+    &:focus {
+      background: white;
+      border-color: $color-primary;
+    }
   }
 
   code,
   pre {
     background: $color-bg-tertiary-light;
     color: $color-text-secondary-light;
+    border-color: $color-border-light;
+  }
+
+  table {
+    border-color: $color-border-light;
+  }
+
+  thead {
+    background: $color-bg-secondary-light;
+  }
+
+  th {
+    color: $color-text-primary-light;
+    border-color: $color-border-light;
+  }
+
+  td {
+    color: $color-text-secondary-light;
+    border-color: $color-border-light;
+  }
+
+  tbody tr:hover {
+    background: $color-bg-secondary-light;
+  }
+
+  hr {
+    background: $color-border-light;
+  }
+
+  blockquote {
+    background: $color-bg-secondary-light;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  * {
+    scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
   }
 }

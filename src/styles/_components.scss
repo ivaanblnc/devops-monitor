@@ -1,181 +1,359 @@
 // ═══════════════════════════════════════════════════════════════════
-// BUTTONS
+// BUTTONS - PREMIUM INTERACTIVE ELEMENTS
 // ═══════════════════════════════════════════════════════════════════
 
 .btn {
-  @include button-base;
-  background: $color-accent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  padding: $space-3 $space-5;
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-normal;
+  border: 1px solid transparent;
+  border-radius: $radius-lg;
+  cursor: pointer;
+  transition: all $transition-base;
+  white-space: nowrap;
+  user-select: none;
+  position: relative;
+  text-decoration: none;
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+}
+
+// Primary button - Main CTAs
+.btn-primary {
+  background: $color-primary;
   color: white;
+  border-color: $color-primary;
 
   &:hover:not(:disabled) {
-    background: $color-accent-hover;
-    box-shadow: $shadow-md;
+    background: $color-primary-light;
+    border-color: $color-primary-light;
+    box-shadow: $shadow-md, $glow-primary;
+    transform: translateY(-1px);
   }
 
   &:active:not(:disabled) {
-    transform: scale(0.98);
-  }
-
-  &--primary {
-    @include button-primary;
-  }
-
-  &--secondary {
-    @include button-secondary;
-  }
-
-  &--danger {
-    @include button-danger;
-  }
-
-  &--sm {
-    padding: $btn-padding-y-sm $btn-padding-x-sm;
-    font-size: $font-size-sm;
-  }
-
-  &--lg {
-    padding: $btn-padding-y-lg $btn-padding-x-lg;
-    font-size: $font-size-lg;
-  }
-
-  &--block {
-    width: 100%;
-  }
-
-  &--loading {
-    position: relative;
-    color: transparent;
-
-    &::after {
-      content: '';
-      position: absolute;
-      width: 16px;
-      height: 16px;
-      top: 50%;
-      left: 50%;
-      margin-left: -8px;
-      margin-top: -8px;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      border-top-color: white;
-      animation: spin 0.6s linear infinite;
-    }
+    transform: translateY(0);
+    box-shadow: $shadow-sm;
   }
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+// Secondary button - Alternative actions
+.btn-secondary {
+  background: $color-bg-surface;
+  color: $color-text-primary;
+  border-color: $color-border-default;
+
+  &:hover:not(:disabled) {
+    background: $color-bg-surface-hover;
+    border-color: $color-border-strong;
+  }
+
+  &:active:not(:disabled) {
+    background: $color-bg-elevated;
+  }
+}
+
+// Ghost button - Minimal style
+.btn-ghost {
+  background: transparent;
+  color: $color-text-secondary;
+  border-color: transparent;
+
+  &:hover:not(:disabled) {
+    background: $color-bg-elevated;
+    color: $color-text-primary;
+    border-color: $color-border-subtle;
+  }
+
+  &:active:not(:disabled) {
+    background: $color-bg-surface;
+  }
+}
+
+// Danger button - Destructive actions
+.btn-danger {
+  background: $color-error;
+  color: white;
+  border-color: $color-error;
+
+  &:hover:not(:disabled) {
+    background: lighten($color-error, 5%);
+    box-shadow: $shadow-md, $glow-error;
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: $shadow-sm;
+  }
+}
+
+// Success button - Positive actions
+.btn-success {
+  background: $color-success;
+  color: white;
+  border-color: $color-success;
+
+  &:hover:not(:disabled) {
+    background: lighten($color-success, 5%);
+    box-shadow: $shadow-md, $glow-success;
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+}
+
+// Outline variants
+.btn-outline {
+  background: transparent;
+  color: $color-primary;
+  border-color: $color-border-interactive;
+
+  &:hover:not(:disabled) {
+    background: rgba($color-primary, 0.08);
+    border-color: $color-primary;
+  }
+}
+
+// Button sizes
+.btn-sm {
+  padding: $space-2 $space-4;
+  font-size: $font-size-xs;
+  gap: $space-1;
+}
+
+.btn-lg {
+  padding: $space-4 $space-6;
+  font-size: $font-size-base;
+  gap: $space-3;
+}
+
+.btn-block {
+  width: 100%;
+  display: flex;
+}
+
+.btn-icon {
+  padding: $space-3;
+  width: 40px;
+  height: 40px;
+  gap: 0;
+
+  &.btn-sm {
+    width: 32px;
+    height: 32px;
+    padding: $space-2;
+  }
+
+  &.btn-lg {
+    width: 48px;
+    height: 48px;
+    padding: $space-4;
   }
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// CARDS
+// CARDS - ELEVATED CONTENT CONTAINERS
 // ═══════════════════════════════════════════════════════════════════
 
 .card {
-  @include card;
+  background: $color-bg-surface;
+  border: 1px solid $color-border-subtle;
+  border-radius: $radius-xl;
+  padding: $space-6;
+  transition: all $transition-base;
 
-  &--glass {
-    @include card-glass;
-  }
-
-  &__header {
-    margin-bottom: $space-4;
-    padding-bottom: $space-4;
-    border-bottom: 1px solid $color-border;
-    @include flex-between;
-  }
-
-  &__title {
-    font-size: $font-size-lg;
-    font-weight: $font-weight-semibold;
-    color: $color-text-primary;
-    margin: 0;
-  }
-
-  &__subtitle {
-    font-size: $font-size-sm;
-    color: $color-text-secondary;
-    margin: 0;
-  }
-
-  &__body {
-    color: $color-text-secondary;
-  }
-
-  &__footer {
-    margin-top: $space-4;
-    padding-top: $space-4;
-    border-top: 1px solid $color-border;
-    @include flex-end;
-    gap: $space-3;
+  &:hover {
+    border-color: $color-border-default;
   }
 }
 
+.card-interactive {
+  cursor: pointer;
+  position: relative;
+
+  &:hover {
+    border-color: $color-border-strong;
+    box-shadow: $shadow-lg;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: $shadow-md;
+  }
+}
+
+.card-glass {
+  background: $color-glass-bg;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-color: $color-glass-border;
+
+  &:hover {
+    background: rgba($color-bg-surface, 0.8);
+    border-color: $color-border-default;
+  }
+}
+
+.card-bordered {
+  border-width: 1px;
+  border-color: $color-border-default;
+}
+
+.card-elevated {
+  box-shadow: $shadow-md;
+  border-color: transparent;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+  }
+}
+
+.card-header {
+  margin-bottom: $space-5;
+  padding-bottom: $space-4;
+  border-bottom: 1px solid $color-border-subtle;
+
+  h3,
+  h4 {
+    margin: 0;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    line-height: $line-height-tight;
+  }
+
+  p {
+    margin: $space-2 0 0 0;
+    font-size: $font-size-sm;
+    color: $color-text-tertiary;
+  }
+}
+
+.card-body {
+  margin-bottom: $space-4;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.card-footer {
+  margin-top: $space-5;
+  padding-top: $space-4;
+  border-top: 1px solid $color-border-subtle;
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+}
+
 // ═══════════════════════════════════════════════════════════════════
-// BADGES
+// BADGES - STATUS & LABELS
 // ═══════════════════════════════════════════════════════════════════
 
 .badge {
-  @include badge;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-1 $space-3;
+  border-radius: $radius-full;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  line-height: 1.4;
+  white-space: nowrap;
 
-  &--primary {
-    @include badge-primary;
+  &--dot::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: $radius-full;
+    display: inline-block;
   }
+}
 
-  &--success {
-    @include badge-success;
+.badge-primary {
+  background: $color-primary-glow;
+  color: $color-primary-light;
+
+  &.badge--dot::before {
+    background: $color-primary;
   }
+}
 
-  &--warning {
-    @include badge-warning;
-  }
+.badge-success {
+  background: $color-success-bg;
+  color: $color-success;
 
-  &--error {
-    @include badge-error;
-  }
-
-  &--info {
-    @include badge;
-    background: rgba($color-info, 0.15);
-    color: $color-info;
-  }
-
-  &--dot {
-    &::before {
-      content: '';
-      display: inline-block;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      margin-right: $space-2;
-    }
-  }
-
-  &--success.badge--dot::before {
+  &.badge--dot::before {
     background: $color-success;
   }
+}
 
-  &--warning.badge--dot::before {
+.badge-warning {
+  background: $color-warning-bg;
+  color: $color-warning;
+
+  &.badge--dot::before {
     background: $color-warning;
   }
+}
 
-  &--error.badge--dot::before {
+.badge-error {
+  background: $color-error-bg;
+  color: $color-error;
+
+  &.badge--dot::before {
     background: $color-error;
   }
+}
 
-  &--info.badge--dot::before {
+.badge-info {
+  background: $color-info-bg;
+  color: $color-info;
+
+  &.badge--dot::before {
     background: $color-info;
   }
 }
 
+.badge-neutral {
+  background: $color-bg-surface;
+  color: $color-text-secondary;
+  border: 1px solid $color-border-subtle;
+
+  &.badge--dot::before {
+    background: $color-text-tertiary;
+  }
+}
+
 // ═══════════════════════════════════════════════════════════════════
-// FORM CONTROLS
+// FORMS - MODERN INPUT FIELDS
 // ═══════════════════════════════════════════════════════════════════
 
 .form-group {
-  margin-bottom: $space-6;
+  margin-bottom: $space-5;
 
   &:last-child {
     margin-bottom: 0;
@@ -186,332 +364,337 @@
   display: block;
   margin-bottom: $space-2;
   font-weight: $font-weight-medium;
-  color: $color-text-primary;
   font-size: $font-size-sm;
+  color: $color-text-primary;
+  line-height: $line-height-normal;
 
   &--required::after {
-    content: ' *';
+    content: '*';
     color: $color-error;
+    margin-left: $space-1;
   }
 }
 
 .form-control {
-  @include input-base;
+  display: block;
+  width: 100%;
+  padding: $space-3 $space-4;
+  background: $color-bg-elevated;
+  border: 1px solid $color-border-default;
+  border-radius: $radius-lg;
+  color: $color-text-primary;
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  line-height: $line-height-normal;
+  transition: all $transition-base;
+
+  &::placeholder {
+    color: $color-text-placeholder;
+  }
+
+  &:hover:not(:disabled) {
+    border-color: $color-border-strong;
+  }
 
   &:focus {
-    border-color: $color-accent;
-    box-shadow: 0 0 0 3px rgba($color-accent, 0.1);
+    outline: none;
+    border-color: $color-primary;
+    background: $color-bg-surface;
+    box-shadow: 0 0 0 3px $color-primary-glow;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: $color-bg-surface;
   }
 
   &--error {
     border-color: $color-error;
-    box-shadow: 0 0 0 3px rgba($color-error, 0.1);
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba($color-error, 0.15);
+    }
   }
 
   &--success {
     border-color: $color-success;
-    box-shadow: 0 0 0 3px rgba($color-success, 0.1);
-  }
-}
 
-.form-help {
-  display: block;
-  margin-top: $space-2;
-  font-size: $font-size-sm;
-  color: $color-text-tertiary;
-}
-
-.form-error {
-  display: block;
-  margin-top: $space-2;
-  font-size: $font-size-sm;
-  color: $color-error;
-}
-
-// ═══════════════════════════════════════════════════════════════════
-// CHECKBOX & RADIO
-// ═══════════════════════════════════════════════════════════════════
-
-.checkbox,
-.radio {
-  @include flex-start;
-  gap: $space-3;
-  cursor: pointer;
-  user-select: none;
-
-  input {
-    cursor: pointer;
-    margin: 0;
-    width: auto;
-  }
-
-  label {
-    margin: 0;
-    cursor: pointer;
-  }
-}
-
-// ═══════════════════════════════════════════════════════════════════
-// SWITCH / TOGGLE
-// ═══════════════════════════════════════════════════════════════════
-
-.switch {
-  display: inline-flex;
-  align-items: center;
-  gap: $space-3;
-}
-
-.switch__toggle {
-  position: relative;
-  width: 48px;
-  height: 28px;
-  background: $color-border;
-  border-radius: $radius-full;
-  cursor: pointer;
-  transition: background $transition-base;
-
-  &::after {
-    content: '';
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    background: white;
-    border-radius: 50%;
-    top: 2px;
-    left: 2px;
-    transition: left $transition-base;
-  }
-
-  &:hover {
-    background: $color-border-hover;
-  }
-}
-
-.switch input {
-  display: none;
-
-  &:checked + .switch__toggle {
-    background: $color-success;
-
-    &::after {
-      left: 22px;
+    &:focus {
+      box-shadow: 0 0 0 3px rgba($color-success, 0.15);
     }
   }
+}
 
-  &:disabled + .switch__toggle {
-    opacity: 0.5;
-    cursor: not-allowed;
+.form-control-sm {
+  padding: $space-2 $space-3;
+  font-size: $font-size-xs;
+}
+
+.form-control-lg {
+  padding: $space-4 $space-5;
+  font-size: $font-size-base;
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 120px;
+  line-height: $line-height-relaxed;
+}
+
+.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23737373' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right $space-4 center;
+  background-size: 16px;
+  padding-right: $space-10;
+  cursor: pointer;
+}
+
+.form-helper {
+  display: block;
+  margin-top: $space-2;
+  font-size: $font-size-xs;
+  line-height: $line-height-normal;
+  color: $color-text-tertiary;
+
+  &--error {
+    color: $color-error;
+  }
+
+  &--success {
+    color: $color-success;
   }
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// MODAL / DIALOG
+// MODALS & DIALOGS - OVERLAY INTERFACES
 // ═══════════════════════════════════════════════════════════════════
 
-.modal {
+.modal-backdrop {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: $z-modal-backdrop;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: $space-4;
-  overflow-y: auto;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   opacity: 0;
   visibility: hidden;
-  transition: opacity $transition-base, visibility $transition-base;
+  transition: all $transition-base;
+  z-index: $z-modal-backdrop;
 
-  &.is-open {
+  &--show {
     opacity: 1;
     visibility: visible;
   }
 }
 
-.modal__content {
-  position: relative;
-  background: $color-bg-secondary;
-  border-radius: $radius-lg;
-  border: 1px solid $color-border;
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.96);
+  background: $color-bg-surface;
+  border: 1px solid $color-border-default;
+  border-radius: $radius-2xl;
   box-shadow: $shadow-2xl;
-  width: 100%;
   max-width: 600px;
-  animation: slideUp $transition-base ease-out;
+  width: calc(100% - $space-8);
+  max-height: 90vh;
+  overflow-y: auto;
+  opacity: 0;
+  visibility: hidden;
+  transition: all $transition-slow;
+  z-index: $z-modal;
+  @include custom-scrollbar;
 
-  &--small {
+  &--show {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &--sm {
     max-width: 400px;
   }
 
-  &--large {
+  &--lg {
     max-width: 800px;
+  }
+
+  &--xl {
+    max-width: 1200px;
   }
 }
 
-.modal__header {
-  @include flex-between;
+.modal-header {
   padding: $space-6;
-  border-bottom: 1px solid $color-border;
-}
+  border-bottom: 1px solid $color-border-subtle;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $space-4;
 
-.modal__title {
-  margin: 0;
-  font-size: $font-size-2xl;
-  font-weight: $font-weight-semibold;
-}
-
-.modal__close {
-  background: none;
-  border: none;
-  font-size: $font-size-lg;
-  color: $color-text-secondary;
-  cursor: pointer;
-  padding: 0;
-  width: 32px;
-  height: 32px;
-  @include flex-center;
-  border-radius: $radius-base;
-  transition: all $transition-base;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.1);
+  h2,
+  h3 {
+    margin: 0;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    line-height: $line-height-tight;
     color: $color-text-primary;
   }
 }
 
-.modal__body {
+.modal-body {
   padding: $space-6;
-  overflow-y: auto;
-  max-height: calc(100vh - 220px);
 }
 
-.modal__footer {
-  @include flex-end;
-  gap: $space-3;
+.modal-footer {
   padding: $space-6;
-  border-top: 1px solid $color-border;
+  border-top: 1px solid $color-border-subtle;
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  justify-content: flex-end;
+}
+
+.modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  border-radius: $radius-md;
+  color: $color-text-tertiary;
+  cursor: pointer;
+  transition: all $transition-base;
+  flex-shrink: 0;
+
+  &:hover {
+    background: $color-bg-elevated;
+    color: $color-text-primary;
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// ALERT / TOAST
+// ALERTS & NOTIFICATIONS - FEEDBACK MESSAGES
 // ═══════════════════════════════════════════════════════════════════
 
 .alert {
   padding: $space-4;
-  border-radius: $radius-base;
-  border-left: 4px solid;
-  @include flex-between;
+  border-radius: $radius-lg;
+  border: 1px solid;
+  display: flex;
+  gap: $space-3;
+  align-items: flex-start;
+  animation: slideUp $transition-base ease-out;
+
+  &__icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   &__content {
     flex: 1;
+    font-size: $font-size-sm;
+    line-height: $line-height-relaxed;
+  }
+
+  &__title {
+    font-weight: $font-weight-semibold;
+    margin-bottom: $space-1;
+    color: $color-text-primary;
   }
 
   &__close {
+    flex-shrink: 0;
     background: none;
     border: none;
+    color: currentColor;
+    opacity: 0.6;
     cursor: pointer;
-    color: inherit;
-    font-size: $font-size-lg;
     padding: 0;
-    margin-left: $space-4;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity $transition-base;
 
     &:hover {
-      opacity: 0.7;
+      opacity: 1;
     }
   }
+}
 
-  &--success {
-    background: rgba($color-success, 0.1);
-    border-color: $color-success;
-    color: $color-success;
-  }
+.alert-primary {
+  background: $color-primary-glow;
+  border-color: rgba($color-primary, 0.3);
+  color: $color-primary-light;
+}
 
-  &--error {
-    background: rgba($color-error, 0.1);
-    border-color: $color-error;
-    color: $color-error;
-  }
+.alert-success {
+  background: $color-success-bg;
+  border-color: rgba($color-success, 0.3);
+  color: $color-success;
+}
 
-  &--warning {
-    background: rgba($color-warning, 0.1);
-    border-color: $color-warning;
-    color: $color-warning;
-  }
+.alert-warning {
+  background: $color-warning-bg;
+  border-color: rgba($color-warning, 0.3);
+  color: $color-warning;
+}
 
-  &--info {
-    background: rgba($color-info, 0.1);
-    border-color: $color-info;
-    color: $color-info;
-  }
+.alert-error {
+  background: $color-error-bg;
+  border-color: rgba($color-error, 0.3);
+  color: $color-error;
+}
+
+.alert-info {
+  background: $color-info-bg;
+  border-color: rgba($color-info, 0.3);
+  color: $color-info;
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// TOAST NOTIFICATIONS
-// ═══════════════════════════════════════════════════════════════════
-
-.toast-container {
-  position: fixed;
-  top: $space-6;
-  right: $space-6;
-  z-index: $z-tooltip;
-  pointer-events: none;
-
-  @include max-width('md') {
-    top: $space-4;
-    right: $space-4;
-    left: $space-4;
-  }
-}
-
-.toast {
-  @include card;
-  box-shadow: $shadow-xl;
-  margin-bottom: $space-3;
-  pointer-events: auto;
-  animation: slideInLeft $transition-base ease-out;
-  max-width: 400px;
-
-  @include max-width('md') {
-    max-width: 100%;
-  }
-
-  &--success {
-    border-left: 4px solid $color-success;
-  }
-
-  &--error {
-    border-left: 4px solid $color-error;
-  }
-
-  &--warning {
-    border-left: 4px solid $color-warning;
-  }
-
-  &--info {
-    border-left: 4px solid $color-info;
-  }
-}
-
-// ═══════════════════════════════════════════════════════════════════
-// PROGRESS BAR
+// PROGRESS BARS - LOADING INDICATORS
 // ═══════════════════════════════════════════════════════════════════
 
 .progress {
   width: 100%;
   height: 6px;
-  background: $color-bg-tertiary;
+  background: $color-bg-surface;
   border-radius: $radius-full;
   overflow: hidden;
+  position: relative;
 }
 
-.progress__bar {
+.progress-bar {
   height: 100%;
-  background: $color-accent;
+  background: $color-primary;
   border-radius: $radius-full;
-  transition: width $transition-base;
+  transition: width $transition-slow;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    animation: shimmer 2s infinite;
+  }
 
   &--success {
     background: $color-success;
@@ -526,24 +709,21 @@
   }
 
   &--animated {
-    animation: progress 2s ease-in-out infinite;
+    animation: pulse 2s ease-in-out infinite;
   }
 }
 
-@keyframes progress {
+@keyframes shimmer {
   0% {
-    width: 0%;
-  }
-  50% {
-    width: 100%;
+    transform: translateX(-100%);
   }
   100% {
-    width: 0%;
+    transform: translateX(100%);
   }
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// DROPDOWN
+// DROPDOWNS & MENUS - CONTEXTUAL ACTIONS
 // ═══════════════════════════════════════════════════════════════════
 
 .dropdown {
@@ -551,60 +731,1151 @@
   display: inline-block;
 }
 
-.dropdown__trigger {
-  @include button-secondary;
-}
-
-.dropdown__menu {
+.dropdown-menu {
   position: absolute;
-  top: 100%;
+  top: calc(100% + $space-2);
   left: 0;
-  background: $color-bg-secondary;
-  border: 1px solid $color-border;
-  border-radius: $radius-md;
-  box-shadow: $shadow-lg;
-  z-index: $z-dropdown;
   min-width: 200px;
+  background: $color-bg-surface;
+  border: 1px solid $color-border-default;
+  border-radius: $radius-lg;
+  padding: $space-2;
+  box-shadow: $shadow-xl;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-8px);
-  transition: opacity $transition-base, transform $transition-base,
-    visibility $transition-base;
+  transform: translateY(-8px) scale(0.96);
+  transition: all $transition-base;
+  z-index: $z-dropdown;
 
-  &.is-open {
+  &--show {
     opacity: 1;
     visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+
+  &--right {
+    left: auto;
+    right: 0;
+  }
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  width: 100%;
+  padding: $space-3 $space-4;
+  background: none;
+  border: none;
+  border-radius: $radius-md;
+  color: $color-text-primary;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-regular;
+  text-align: left;
+  cursor: pointer;
+  transition: all $transition-fast;
+  white-space: nowrap;
+
+  &:hover:not(:disabled) {
+    background: $color-bg-elevated;
+    color: $color-primary;
+  }
+
+  &--active {
+    background: $color-primary-glow;
+    color: $color-primary;
+    font-weight: $font-weight-medium;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  &--danger {
+    color: $color-error;
+
+    &:hover:not(:disabled) {
+      background: $color-error-bg;
+    }
+  }
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: $color-border-subtle;
+  margin: $space-2 0;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// TABLES - DATA DISPLAY
+// ═══════════════════════════════════════════════════════════════════
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  border: 1px solid $color-border-subtle;
+  background: $color-bg-surface;
+}
+
+.table thead {
+  background: $color-bg-elevated;
+}
+
+.table th {
+  padding: $space-3 $space-4;
+  text-align: left;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-xs;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $color-text-tertiary;
+  white-space: nowrap;
+  border-bottom: 1px solid $color-border-subtle;
+}
+
+.table td {
+  padding: $space-4;
+  color: $color-text-secondary;
+  font-size: $font-size-sm;
+  border-bottom: 1px solid $color-border-subtle;
+  line-height: $line-height-normal;
+}
+
+.table tbody tr {
+  transition: background $transition-fast;
+
+  &:hover {
+    background: $color-bg-elevated;
+  }
+
+  &:last-child td {
+    border-bottom: none;
+  }
+}
+
+.table-sm {
+  th,
+  td {
+    padding: $space-2 $space-3;
+  }
+}
+
+.table-lg {
+  th,
+  td {
+    padding: $space-5 $space-6;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// LISTS - ITEM GROUPS
+// ═══════════════════════════════════════════════════════════════════
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-item {
+  padding: $space-4;
+  border-bottom: 1px solid $color-border-subtle;
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  transition: background $transition-base;
+
+  &:hover {
+    background: $color-bg-elevated;
+  }
+
+  &:first-child {
+    border-radius: $radius-lg $radius-lg 0 0;
+  }
+
+  &:last-child {
+    border-bottom: none;
+    border-radius: 0 0 $radius-lg $radius-lg;
+  }
+
+  &--active {
+    background: $color-primary-glow;
+    border-left: 3px solid $color-primary;
+    padding-left: calc($space-4 - 3px);
+    color: $color-primary;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// NAVIGATION - MENU LINKS
+// ═══════════════════════════════════════════════════════════════════
+
+.nav {
+  display: flex;
+  gap: $space-1;
+  align-items: center;
+}
+
+.nav--vertical {
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.nav-item {
+  display: inline-block;
+  position: relative;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-3 $space-4;
+  color: $color-text-secondary;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  text-decoration: none;
+  border-radius: $radius-lg;
+  transition: all $transition-base;
+  position: relative;
+
+  &:hover {
+    color: $color-text-primary;
+    background: $color-bg-elevated;
+  }
+
+  &--active {
+    color: $color-primary;
+    background: $color-primary-glow;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 60%;
+      background: $color-primary;
+      border-radius: $radius-full;
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// TOOLTIPS - CONTEXTUAL HELP
+// ═══════════════════════════════════════════════════════════════════
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  background: $color-bg-overlay;
+  color: $color-text-primary;
+  text-align: center;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  border: 1px solid $color-border-default;
+  position: absolute;
+  z-index: $z-tooltip;
+  bottom: calc(100% + $space-2);
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+  white-space: nowrap;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  box-shadow: $shadow-lg;
+  opacity: 0;
+  transition: all $transition-base;
+  pointer-events: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: $color-bg-overlay;
+  }
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PAGINATION - PAGE NAVIGATION
+// ═══════════════════════════════════════════════════════════════════
+
+.pagination {
+  display: flex;
+  gap: $space-1;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination-item {
+  a,
+  span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 $space-2;
+    border: 1px solid $color-border-subtle;
+    border-radius: $radius-md;
+    background: $color-bg-surface;
+    color: $color-text-primary;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    text-decoration: none;
+    transition: all $transition-base;
+    cursor: pointer;
+
+    &:hover {
+      background: $color-bg-elevated;
+      border-color: $color-border-default;
+      color: $color-primary;
+    }
+  }
+
+  &--active {
+    a,
+    span {
+      background: $color-primary;
+      border-color: $color-primary;
+      color: white;
+      pointer-events: none;
+    }
+  }
+
+  &--disabled {
+    a,
+    span {
+      opacity: 0.4;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// GRID UTILITIES - LAYOUT
+// ═══════════════════════════════════════════════════════════════════
+
+.grid {
+  display: grid;
+  gap: $space-6;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+
+  @media (max-width: $breakpoint-xl) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.grid-auto {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+// ═══════════════════════
+// ANIMATIONS & KEYFRAMES - SMOOTH MOTION
+// ═══════════════════════════════════════════════════════════════════
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
     transform: translateY(0);
   }
 }
 
-.dropdown__item {
-  display: block;
-  width: 100%;
-  text-align: left;
-  padding: $space-3 $space-4;
-  border: none;
-  background: none;
-  color: $color-text-primary;
-  cursor: pointer;
-  transition: background $transition-base;
-  font-size: $font-size-sm;
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 
-  &:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: $color-accent;
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// UTILITY CLASSES - QUICK STYLING
+// ═══════════════════════════════════════════════════════════════════
+
+// Text utilities
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-wrap {
+  white-space: normal;
+  word-break: break-word;
+}
+
+.text-nowrap {
+  white-space: nowrap;
+}
+
+.text-muted {
+  color: $color-text-tertiary !important;
+}
+
+.text-primary {
+  color: $color-primary !important;
+}
+
+.text-success {
+  color: $color-success !important;
+}
+
+.text-warning {
+  color: $color-warning !important;
+}
+
+.text-error {
+  color: $color-error !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+// Flexbox utilities
+.flex {
+  display: flex;
+}
+
+.flex-inline {
+  display: inline-flex;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.flex-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-col-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+.flex-grow-0 {
+  flex-grow: 0;
+}
+
+// Gap utilities
+.gap-1 {
+  gap: $space-1;
+}
+.gap-2 {
+  gap: $space-2;
+}
+.gap-3 {
+  gap: $space-3;
+}
+.gap-4 {
+  gap: $space-4;
+}
+.gap-5 {
+  gap: $space-5;
+}
+.gap-6 {
+  gap: $space-6;
+}
+.gap-8 {
+  gap: $space-8;
+}
+
+// Margin utilities
+.m-0 {
+  margin: 0 !important;
+}
+.m-auto {
+  margin: auto !important;
+}
+
+.mt-0 {
+  margin-top: 0 !important;
+}
+.mt-1 {
+  margin-top: $space-1 !important;
+}
+.mt-2 {
+  margin-top: $space-2 !important;
+}
+.mt-3 {
+  margin-top: $space-3 !important;
+}
+.mt-4 {
+  margin-top: $space-4 !important;
+}
+.mt-5 {
+  margin-top: $space-5 !important;
+}
+.mt-6 {
+  margin-top: $space-6 !important;
+}
+.mt-8 {
+  margin-top: $space-8 !important;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+.mb-1 {
+  margin-bottom: $space-1 !important;
+}
+.mb-2 {
+  margin-bottom: $space-2 !important;
+}
+.mb-3 {
+  margin-bottom: $space-3 !important;
+}
+.mb-4 {
+  margin-bottom: $space-4 !important;
+}
+.mb-5 {
+  margin-bottom: $space-5 !important;
+}
+.mb-6 {
+  margin-bottom: $space-6 !important;
+}
+.mb-8 {
+  margin-bottom: $space-8 !important;
+}
+
+.ml-0 {
+  margin-left: 0 !important;
+}
+.ml-auto {
+  margin-left: auto !important;
+}
+
+.mr-0 {
+  margin-right: 0 !important;
+}
+.mr-auto {
+  margin-right: auto !important;
+}
+
+.mx-auto {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.my-0 {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+// Padding utilities
+.p-0 {
+  padding: 0 !important;
+}
+.p-2 {
+  padding: $space-2 !important;
+}
+.p-3 {
+  padding: $space-3 !important;
+}
+.p-4 {
+  padding: $space-4 !important;
+}
+.p-5 {
+  padding: $space-5 !important;
+}
+.p-6 {
+  padding: $space-6 !important;
+}
+.p-8 {
+  padding: $space-8 !important;
+}
+
+.pt-0 {
+  padding-top: 0 !important;
+}
+.pt-4 {
+  padding-top: $space-4 !important;
+}
+.pt-6 {
+  padding-top: $space-6 !important;
+}
+.pt-8 {
+  padding-top: $space-8 !important;
+}
+
+.pb-0 {
+  padding-bottom: 0 !important;
+}
+.pb-4 {
+  padding-bottom: $space-4 !important;
+}
+.pb-6 {
+  padding-bottom: $space-6 !important;
+}
+.pb-8 {
+  padding-bottom: $space-8 !important;
+}
+
+.pl-4 {
+  padding-left: $space-4 !important;
+}
+.pl-6 {
+  padding-left: $space-6 !important;
+}
+
+.pr-4 {
+  padding-right: $space-4 !important;
+}
+.pr-6 {
+  padding-right: $space-6 !important;
+}
+
+.px-0 {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+.px-4 {
+  padding-left: $space-4 !important;
+  padding-right: $space-4 !important;
+}
+.px-6 {
+  padding-left: $space-6 !important;
+  padding-right: $space-6 !important;
+}
+.px-8 {
+  padding-left: $space-8 !important;
+  padding-right: $space-8 !important;
+}
+
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+.py-4 {
+  padding-top: $space-4 !important;
+  padding-bottom: $space-4 !important;
+}
+.py-6 {
+  padding-top: $space-6 !important;
+  padding-bottom: $space-6 !important;
+}
+.py-8 {
+  padding-top: $space-8 !important;
+  padding-bottom: $space-8 !important;
+}
+
+// Display utilities
+.hidden {
+  display: none !important;
+}
+
+.visible {
+  visibility: visible !important;
+}
+
+.invisible {
+  visibility: hidden !important;
+}
+
+.block {
+  display: block !important;
+}
+
+.inline {
+  display: inline !important;
+}
+
+.inline-block {
+  display: inline-block !important;
+}
+
+// Position utilities
+.relative {
+  position: relative !important;
+}
+
+.absolute {
+  position: absolute !important;
+}
+
+.fixed {
+  position: fixed !important;
+}
+
+.sticky {
+  position: sticky !important;
+}
+
+// Width utilities
+.w-full {
+  width: 100% !important;
+}
+
+.w-auto {
+  width: auto !important;
+}
+
+.w-fit {
+  width: fit-content !important;
+}
+
+.max-w-sm {
+  max-width: 400px !important;
+}
+
+.max-w-md {
+  max-width: 512px !important;
+}
+
+.max-w-lg {
+  max-width: 640px !important;
+}
+
+.max-w-xl {
+  max-width: 768px !important;
+}
+
+.max-w-2xl {
+  max-width: 896px !important;
+}
+
+.max-w-4xl {
+  max-width: 1152px !important;
+}
+
+.max-w-full {
+  max-width: 100% !important;
+}
+
+// Height utilities
+.h-full {
+  height: 100% !important;
+}
+
+.h-auto {
+  height: auto !important;
+}
+
+.min-h-screen {
+  min-height: 100vh !important;
+}
+
+// Opacity utilities
+.opacity-0 {
+  opacity: 0 !important;
+}
+
+.opacity-25 {
+  opacity: 0.25 !important;
+}
+
+.opacity-50 {
+  opacity: 0.5 !important;
+}
+
+.opacity-75 {
+  opacity: 0.75 !important;
+}
+
+.opacity-100 {
+  opacity: 1 !important;
+}
+
+// Border utilities
+.border {
+  border: 1px solid $color-border-default !important;
+}
+
+.border-0 {
+  border: none !important;
+}
+
+.border-t {
+  border-top: 1px solid $color-border-subtle !important;
+}
+
+.border-b {
+  border-bottom: 1px solid $color-border-subtle !important;
+}
+
+.border-l {
+  border-left: 1px solid $color-border-subtle !important;
+}
+
+.border-r {
+  border-right: 1px solid $color-border-subtle !important;
+}
+
+// Border radius utilities
+.rounded-none {
+  border-radius: 0 !important;
+}
+
+.rounded-sm {
+  border-radius: $radius-sm !important;
+}
+
+.rounded {
+  border-radius: $radius-lg !important;
+}
+
+.rounded-lg {
+  border-radius: $radius-xl !important;
+}
+
+.rounded-full {
+  border-radius: $radius-full !important;
+}
+
+// Shadow utilities
+.shadow-none {
+  box-shadow: none !important;
+}
+
+.shadow-sm {
+  box-shadow: $shadow-sm !important;
+}
+
+.shadow {
+  box-shadow: $shadow-md !important;
+}
+
+.shadow-lg {
+  box-shadow: $shadow-lg !important;
+}
+
+.shadow-xl {
+  box-shadow: $shadow-xl !important;
+}
+
+// Overflow utilities
+.overflow-hidden {
+  overflow: hidden !important;
+}
+
+.overflow-auto {
+  overflow: auto !important;
+}
+
+.overflow-x-auto {
+  overflow-x: auto !important;
+}
+
+.overflow-y-auto {
+  overflow-y: auto !important;
+}
+
+// Cursor utilities
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed !important;
+}
+
+.cursor-default {
+  cursor: default !important;
+}
+
+// Pointer events utilities
+.pointer-events-none {
+  pointer-events: none !important;
+}
+
+.pointer-events-auto {
+  pointer-events: auto !important;
+}
+
+// User select utilities
+.select-none {
+  user-select: none !important;
+}
+
+.select-text {
+  user-select: text !important;
+}
+
+.select-all {
+  user-select: all !important;
+}
+
+// Animation utilities
+.animate-fade-in {
+  animation: fadeIn $transition-base ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp $transition-base ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft $transition-base ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight $transition-base ease-out;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+// Transition utilities
+.transition-none {
+  transition: none !important;
+}
+
+.transition-all {
+  transition: all $transition-base !important;
+}
+
+.transition-fast {
+  transition: all $transition-fast !important;
+}
+
+.transition-slow {
+  transition: all $transition-slow !important;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// RESPONSIVE UTILITIES
+// ═══════════════════════════════════════════════════════════════════
+
+@media (max-width: $breakpoint-md) {
+  .sm\:hidden {
+    display: none !important;
   }
 
-  &:first-child {
-    border-radius: $radius-md $radius-md 0 0;
+  .sm\:block {
+    display: block !important;
   }
 
-  &:last-child {
-    border-radius: 0 0 $radius-md $radius-md;
+  .sm\:flex {
+    display: flex !important;
   }
 
-  &.is-active {
-    background: rgba($color-accent, 0.1);
-    color: $color-accent;
+  .sm\:flex-col {
+    flex-direction: column !important;
+  }
+
+  .sm\:w-full {
+    width: 100% !important;
+  }
+
+  .sm\:text-center {
+    text-align: center !important;
+  }
+
+  .sm\:px-4 {
+    padding-left: $space-4 !important;
+    padding-right: $space-4 !important;
+  }
+
+  .sm\:gap-4 {
+    gap: $space-4 !important;
+  }
+}
+
+@media (min-width: $breakpoint-md) {
+  .md\:block {
+    display: block !important;
+  }
+
+  .md\:flex {
+    display: flex !important;
+  }
+
+  .md\:hidden {
+    display: none !important;
+  }
+
+  .md\:flex-row {
+    flex-direction: row !important;
+  }
+}
+
+@media (min-width: $breakpoint-lg) {
+  .lg\:block {
+    display: block !important;
+  }
+
+  .lg\:flex {
+    display: flex !important;
+  }
+
+  .lg\:grid {
+    display: grid !important;
   }
 }
