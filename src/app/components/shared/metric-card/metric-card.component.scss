@@ -3,8 +3,8 @@
 // Displays key metrics with status, trends, and visual indicators
 // ============================================================================
 
-@import '../../../styles/variables';
-
+@import 'variables';
+@import 'mixins';
 .metric-card {
   position: relative;
   overflow: hidden;

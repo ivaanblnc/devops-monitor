@@ -3,6 +3,8 @@
 // Mobile-only top navigation bar with menu toggle and notifications
 // ============================================================================
 
+@import 'variables';
+@import 'mixins';
 .navbar {
   display: none;
   position: fixed;

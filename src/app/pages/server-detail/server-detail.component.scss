@@ -1,3 +1,5 @@
+@import 'variables';
+@import 'mixins';
 .server-detail {
   padding: $space-6;
   animation: fadeIn 0.5s ease-in;

@@ -3,6 +3,8 @@
 // Modern, professional styling for application settings with accordion sections
 // ============================================================================
 
+@import 'variables';
+@import 'mixins';
 .settings {
   padding: $space-8;
   max-width: 1000px;

@@ -3,6 +3,8 @@
  * Main layout container with sidebar and content area
  */
 
+@import 'variables';
+@import 'mixins';
 :host {
   --app-sidebar-width: 240px;
   --app-navbar-height: 60px;

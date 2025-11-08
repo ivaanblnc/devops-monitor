@@ -3,6 +3,8 @@
 // Reusable chart container with canvas and legend
 // ============================================================================
 
+@import 'variables';
+@import 'mixins';
 .chart {
   display: flex;
   flex-direction: column;

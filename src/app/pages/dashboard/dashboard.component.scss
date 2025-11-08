@@ -2,6 +2,8 @@
 // DASHBOARD - MAIN MONITORING INTERFACE
 // ═══════════════════════════════════════════════════════════════════
 
+@import 'variables';
+@import 'mixins';
 .dashboard {
   padding: $space-8;
   animation: fadeIn $transition-base ease-out;

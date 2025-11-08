@@ -3,6 +3,8 @@
 // Main navigation sidebar with logo, nav items, and user profile
 // ============================================================================
 
+@import 'variables';
+@import 'mixins';
 .sidebar {
   display: flex;
   flex-direction: column;

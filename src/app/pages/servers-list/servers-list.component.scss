@@ -2,6 +2,8 @@
 // SERVERS PAGE - SERVER MANAGEMENT & MONITORING
 // ═══════════════════════════════════════════════════════════════════
 
+@import 'variables';
+@import 'mixins';
 .servers {
   padding: $space-8;
   animation: fadeIn $transition-base ease-out;

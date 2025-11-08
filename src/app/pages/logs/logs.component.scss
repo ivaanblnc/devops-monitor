@@ -2,6 +2,8 @@
 // LOGS PAGE - SYSTEM LOGGING & MONITORING
 // ═══════════════════════════════════════════════════════════════════
 
+@import 'variables';
+@import 'mixins';
 .logs {
   padding: $space-8;
   animation: fadeIn $transition-base ease-out;
