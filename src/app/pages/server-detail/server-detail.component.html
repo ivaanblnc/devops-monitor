@@ -1,0 +1,142 @@
+<div class="server-detail">
+  @if (server(); as srv) {
+    <!-- Header -->
+    <div class="server-detail__header">
+      <div class="server-detail__title-section">
+        <h1>{{ srv.name }}</h1>
+        <div class="server-detail__meta">
+          <span class="server-detail__status" [ngClass]="'server-detail__status--' + srv.status">
+            {{ srv.status | uppercase }}
+          </span>
+          <span class="server-detail__location">📍 {{ srv.location }}</span>
+          <span class="server-detail__ip">{{ srv.ip }}</span>
+        </div>
+      </div>
+
+      <div class="server-detail__actions">
+        <button class="server-detail__btn server-detail__btn--primary" (click)="restartServer()">
+          🔄 Restart
+        </button>
+        <button class="server-detail__btn server-detail__btn--secondary" (click)="editServer()">
+          ✏️ Edit
+        </button>
+        <button class="server-detail__btn server-detail__btn--danger" (click)="deleteServer()">
+          🗑️ Delete
+        </button>
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="server-detail__stats">
+      <div class="server-detail__stat-card">
+        <span class="server-detail__stat-label">CPU</span>
+        <div class="server-detail__stat-bar">
+          <div class="server-detail__stat-fill" [style.width.%]="srv.cpu"
+            [ngClass]="{ 'server-detail__stat-fill--warning': srv.cpu > 70, 'server-detail__stat-fill--error': srv.cpu > 85 }">
+          </div>
+        </div>
+        <span class="server-detail__stat-value">{{ srv.cpu | number: '1.0-0' }}%</span>
+      </div>
+
+      <div class="server-detail__stat-card">
+        <span class="server-detail__stat-label">Memory</span>
+        <div class="server-detail__stat-bar">
+          <div class="server-detail__stat-fill" [style.width.%]="srv.memory"
+            [ngClass]="{ 'server-detail__stat-fill--warning': srv.memory > 75, 'server-detail__stat-fill--error': srv.memory > 90 }">
+          </div>
+        </div>
+        <span class="server-detail__stat-value">{{ srv.memory | number: '1.0-0' }}%</span>
+      </div>
+
+      <div class="server-detail__stat-card">
+        <span class="server-detail__stat-label">Disk</span>
+        <div class="server-detail__stat-bar">
+          <div class="server-detail__stat-fill" [style.width.%]="srv.disk"
+            [ngClass]="{ 'server-detail__stat-fill--warning': srv.disk > 80, 'server-detail__stat-fill--error': srv.disk > 95 }">
+          </div>
+        </div>
+        <span class="server-detail__stat-value">{{ srv.disk | number: '1.0-0' }}%</span>
+      </div>
+
+      <div class="server-detail__stat-card">
+        <span class="server-detail__stat-label">Uptime</span>
+        <span class="server-detail__stat-value-large">{{ srv.uptime | number: '1.0-0' }}</span>
+        <span class="server-detail__stat-unit">days</span>
+      </div>
+
+      <div class="server-detail__stat-card">
+        <span class="server-detail__stat-label">OS</span>
+        <span class="server-detail__stat-value-os">{{ srv.os }}</span>
+      </div>
+
+      <div class="server-detail__stat-card">
+        <span class="server-detail__stat-label">Network</span>
+        <div class="server-detail__network-stats">
+          <div>↓ {{ srv.networkIn | number: '1.1-1' }} MB/s</div>
+          <div>↑ {{ srv.networkOut | number: '1.1-1' }} MB/s</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="server-detail__charts">
+      <div class="server-detail__chart-container">
+        <h3 class="server-detail__chart-title">CPU Trend</h3>
+        <app-chart
+          [data]="cpuChart()"
+          type="line"
+          [height]="250">
+        </app-chart>
+      </div>
+
+      <div class="server-detail__chart-container">
+        <h3 class="server-detail__chart-title">Memory Usage</h3>
+        <app-chart
+          [data]="memoryChart()"
+          type="area"
+          [height]="250">
+        </app-chart>
+      </div>
+
+      <div class="server-detail__chart-container">
+        <h3 class="server-detail__chart-title">Network Traffic</h3>
+        <app-chart
+          [data]="networkChart()"
+          type="line"
+          [height]="250">
+        </app-chart>
+      </div>
+
+      <div class="server-detail__chart-container">
+        <h3 class="server-detail__chart-title">Disk I/O</h3>
+        <app-chart
+          [data]="diskChart()"
+          type="bar"
+          [height]="250">
+        </app-chart>
+      </div>
+    </div>
+
+    <!-- Recent Logs -->
+    <div class="server-detail__logs">
+      <div class="server-detail__logs-header">
+        <h2>Recent Logs</h2>
+        <a routerLink="/logs" class="server-detail__logs-link">View all logs →</a>
+      </div>
+
+      <div class="server-detail__logs-list">
+        @for (log of recentLogs(); track log.id) {
+          <div class="server-detail__log-item" [ngClass]="'server-detail__log-item--' + log.level">
+            <span class="server-detail__log-level">{{ log.level | uppercase }}</span>
+            <span class="server-detail__log-time">{{ log.timestamp | date: 'short' }}</span>
+            <span class="server-detail__log-message">{{ log.message }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  } @else {
+    <div class="server-detail__loading">
+      <app-skeleton-loader type="card"></app-skeleton-loader>
+    </div>
+  }
+</div>

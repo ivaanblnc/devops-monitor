@@ -1,0 +1,134 @@
+<div class="dashboard">
+  <!-- Header -->
+  <div class="dashboard__header">
+    <h1>Dashboard</h1>
+    <div class="dashboard__controls">
+      <button
+        *ngFor="let range of timeRanges"
+        class="dashboard__time-btn"
+        [class.is-active]="selectedRange() === range"
+        (click)="setTimeRange(range)">
+        {{ getTimeRangeLabel(range) }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Metrics Grid -->
+  <div class="dashboard__metrics">
+    @if (isLoading()) {
+      @for (i of [0, 1, 2, 3, 4, 5]; track i) {
+        <app-skeleton-loader type="card"></app-skeleton-loader>
+      }
+    } @else {
+      @for (metric of metrics(); track metric.id) {
+        <app-metric-card
+          [label]="metric.label"
+          [value]="metric.value"
+          [unit]="metric.unit"
+          [trend]="metric.trend"
+          [status]="metric.status"
+          [icon]="metric.icon"
+          [change]="metric.change">
+        </app-metric-card>
+      }
+    }
+  </div>
+
+  <!-- Charts Grid -->
+  <div class="dashboard__charts">
+    <!-- CPU Chart -->
+    <div class="dashboard__chart-container">
+      <h3 class="dashboard__chart-title">CPU Usage</h3>
+      @if (isLoading()) {
+        <app-skeleton-loader type="chart"></app-skeleton-loader>
+      } @else {
+        <app-chart
+          [data]="cpuChartData()"
+          type="line"
+          [height]="300">
+        </app-chart>
+      }
+    </div>
+
+    <!-- Memory Chart -->
+    <div class="dashboard__chart-container">
+      <h3 class="dashboard__chart-title">Memory Usage</h3>
+      @if (isLoading()) {
+        <app-skeleton-loader type="chart"></app-skeleton-loader>
+      } @else {
+        <app-chart
+          [data]="memoryChartData()"
+          type="area"
+          [height]="300">
+        </app-chart>
+      }
+    </div>
+
+    <!-- Network Chart -->
+    <div class="dashboard__chart-container">
+      <h3 class="dashboard__chart-title">Network Traffic</h3>
+      @if (isLoading()) {
+        <app-skeleton-loader type="chart"></app-skeleton-loader>
+      } @else {
+        <app-chart
+          [data]="networkChartData()"
+          type="line"
+          [height]="300">
+        </app-chart>
+      }
+    </div>
+  </div>
+
+  <!-- Quick Stats -->
+  <div class="dashboard__stats">
+    <div class="dashboard__stat-card">
+      <span class="dashboard__stat-label">Total Servers</span>
+      <span class="dashboard__stat-value">{{ stats().totalServers }}</span>
+      <div class="dashboard__stat-breakdown">
+        <span class="dashboard__stat-badge dashboard__stat-badge--success">
+          {{ stats().onlineServers }} Online
+        </span>
+        <span class="dashboard__stat-badge dashboard__stat-badge--warning">
+          {{ stats().warningServers }} Warning
+        </span>
+        <span class="dashboard__stat-badge dashboard__stat-badge--error">
+          {{ stats().offlineServers }} Offline
+        </span>
+      </div>
+    </div>
+
+    <div class="dashboard__stat-card">
+      <span class="dashboard__stat-label">Active Alerts</span>
+      <span class="dashboard__stat-value">{{ activeAlertsCount() }}</span>
+      <div class="dashboard__stat-breakdown">
+        <span class="dashboard__stat-badge dashboard__stat-badge--error">
+          {{ criticalAlertsCount() }} Critical
+        </span>
+      </div>
+    </div>
+
+    <div class="dashboard__stat-card">
+      <span class="dashboard__stat-label">Average CPU</span>
+      <span class="dashboard__stat-value">{{ stats().averageCpu | number: '1.0-0' }}%</span>
+      <div class="dashboard__stat-breakdown">
+        <span class="dashboard__stat-badge" [class.dashboard__stat-badge--success]="stats().averageCpu < 50"
+          [class.dashboard__stat-badge--warning]="stats().averageCpu >= 50 && stats().averageCpu < 80"
+          [class.dashboard__stat-badge--error]="stats().averageCpu >= 80">
+          Max: 95%
+        </span>
+      </div>
+    </div>
+
+    <div class="dashboard__stat-card">
+      <span class="dashboard__stat-label">Average Memory</span>
+      <span class="dashboard__stat-value">{{ stats().averageMemory | number: '1.0-0' }}%</span>
+      <div class="dashboard__stat-breakdown">
+        <span class="dashboard__stat-badge" [class.dashboard__stat-badge--success]="stats().averageMemory < 60"
+          [class.dashboard__stat-badge--warning]="stats().averageMemory >= 60 && stats().averageMemory < 85"
+          [class.dashboard__stat-badge--error]="stats().averageMemory >= 85">
+          Max: 90%
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

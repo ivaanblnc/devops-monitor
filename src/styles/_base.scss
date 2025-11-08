@@ -1,0 +1,306 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  @include smooth-scroll;
+  scroll-padding-top: $navbar-height;
+}
+
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  line-height: $line-height-normal;
+  letter-spacing: $letter-spacing-normal;
+  color: $color-text-primary;
+  background: $color-bg-primary;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// TYPOGRAPHY
+// ═══════════════════════════════════════════════════════════════════
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-tight;
+  color: $color-text-primary;
+  margin-bottom: $space-4;
+}
+
+h1 {
+  font-size: $font-size-4xl;
+}
+
+h2 {
+  font-size: $font-size-3xl;
+}
+
+h3 {
+  font-size: $font-size-2xl;
+}
+
+h4 {
+  font-size: $font-size-xl;
+}
+
+h5 {
+  font-size: $font-size-lg;
+}
+
+h6 {
+  font-size: $font-size-base;
+}
+
+p {
+  margin-bottom: $space-4;
+  line-height: $line-height-relaxed;
+  color: $color-text-secondary;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+small {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// LINKS
+// ═══════════════════════════════════════════════════════════════════
+
+a {
+  color: $color-accent;
+  text-decoration: none;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $color-accent-hover;
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// BUTTONS
+// ═══════════════════════════════════════════════════════════════════
+
+button,
+input[type='button'],
+input[type='submit'],
+input[type='reset'] {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// FORMS
+// ═══════════════════════════════════════════════════════════════════
+
+input,
+textarea,
+select {
+  @include input-base;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239CA3AF' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right $space-3 center;
+  background-size: 16px;
+  padding-right: $space-12;
+}
+
+label {
+  display: block;
+  margin-bottom: $space-2;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+  font-size: $font-size-sm;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CODE BLOCKS
+// ═══════════════════════════════════════════════════════════════════
+
+code,
+pre {
+  font-family: $font-family-mono;
+  background: $color-bg-tertiary;
+  border-radius: $radius-base;
+  color: $color-text-secondary;
+}
+
+code {
+  display: inline-block;
+  padding: $space-1 $space-2;
+  font-size: $font-size-sm;
+}
+
+pre {
+  display: block;
+  padding: $space-4;
+  margin-bottom: $space-4;
+  overflow-x: auto;
+
+  code {
+    background: none;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// LISTS
+// ═══════════════════════════════════════════════════════════════════
+
+ul,
+ol {
+  margin-bottom: $space-4;
+  padding-left: $space-6;
+}
+
+li {
+  margin-bottom: $space-2;
+}
+
+dt {
+  font-weight: $font-weight-semibold;
+  margin-top: $space-3;
+}
+
+dd {
+  margin-left: 0;
+  margin-bottom: $space-2;
+  color: $color-text-secondary;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// TABLES
+// ═══════════════════════════════════════════════════════════════════
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: $space-6;
+}
+
+th {
+  text-align: left;
+  font-weight: $font-weight-semibold;
+  background: $color-bg-tertiary;
+  padding: $space-3 $space-4;
+  border-bottom: 2px solid $color-border;
+}
+
+td {
+  padding: $space-3 $space-4;
+  border-bottom: 1px solid $color-border;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// UTILITY ELEMENTS
+// ═══════════════════════════════════════════════════════════════════
+
+hr {
+  margin: $space-6 0;
+  border: none;
+  border-top: 1px solid $color-border;
+}
+
+blockquote {
+  margin: 0 0 $space-4 0;
+  padding-left: $space-4;
+  border-left: 4px solid $color-accent;
+  color: $color-text-secondary;
+  font-style: italic;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+svg {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// LIGHT MODE SUPPORT
+// ═══════════════════════════════════════════════════════════════════
+
+body.light-mode {
+  color: $color-text-primary-light;
+  background: $color-bg-primary-light;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: $color-text-primary-light;
+  }
+
+  p {
+    color: $color-text-secondary-light;
+  }
+
+  input,
+  textarea,
+  select {
+    background: $color-bg-secondary-light;
+    color: $color-text-primary-light;
+    border-color: $color-border-light;
+
+    &::placeholder {
+      color: $color-text-tertiary-light;
+    }
+
+    &:hover {
+      border-color: $color-border-hover-light;
+    }
+  }
+
+  code,
+  pre {
+    background: $color-bg-tertiary-light;
+    color: $color-text-secondary-light;
+  }
+}

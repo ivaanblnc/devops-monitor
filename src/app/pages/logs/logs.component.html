@@ -1,0 +1,160 @@
+<div class="logs">
+  <!-- Header -->
+  <div class="logs__header">
+    <h1>Logs</h1>
+    <button class="logs__btn-export" (click)="exportCSV()">📥 Export CSV</button>
+  </div>
+
+  <!-- Main Content -->
+  <div class="logs__container">
+    <!-- Left Sidebar - Filters -->
+    <div class="logs__filters" [class.logs__filters--open]="filtersOpen()">
+      <div class="logs__filter-header">
+        <h3>Filters</h3>
+        <button class="logs__filter-close" (click)="toggleFilters()">✕</button>
+      </div>
+
+      <!-- Level Filter -->
+      <div class="logs__filter-group">
+        <label class="logs__filter-label">Log Level</label>
+        <div class="logs__chips">
+          @for (level of logLevels; track level) {
+            <button
+              class="logs__chip"
+              [class.logs__chip--active]="selectedLevels().includes(level)"
+              (click)="toggleLevel(level)">
+              {{ getLevelIcon(level) }} {{ level | uppercase }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <!-- Server Filter -->
+      <div class="logs__filter-group">
+        <label class="logs__filter-label">Server</label>
+        <select [(ngModel)]="selectedServer" name="server" (change)="applyFilters()">
+          <option value="">All Servers</option>
+          @for (server of servers(); track server.id) {
+            <option [value]="server.name">{{ server.name }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Date Range Filter -->
+      <div class="logs__filter-group">
+        <label class="logs__filter-label">Date Range</label>
+        <input type="date" [(ngModel)]="dateFrom" name="dateFrom" (change)="applyFilters()" />
+        <input type="date" [(ngModel)]="dateTo" name="dateTo" (change)="applyFilters()" />
+      </div>
+
+      <!-- Search Filter -->
+      <div class="logs__filter-group">
+        <label class="logs__filter-label">Search</label>
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          name="search"
+          placeholder="Search logs..."
+          (input)="onSearchChange()" />
+      </div>
+
+      <!-- Clear Filters Button -->
+      <button class="logs__btn-clear" (click)="clearFilters()">Clear All</button>
+    </div>
+
+    <!-- Mobile Filter Toggle -->
+    <button class="logs__filter-toggle" (click)="toggleFilters()">
+      🔍 {{ filtersOpen() ? 'Hide' : 'Show' }} Filters
+    </button>
+
+    <!-- Right Content - Logs List -->
+    <div class="logs__content">
+      <!-- Auto-scroll Toggle -->
+      <div class="logs__toolbar">
+        <label class="logs__auto-scroll">
+          <input type="checkbox" [(ngModel)]="autoScroll" name="autoScroll" />
+          <span>Auto-scroll</span>
+        </label>
+        @if (newLogsCount() > 0) {
+          <button class="logs__new-logs-badge" (click)="scrollToTop()">
+            {{ newLogsCount() }} New Logs ⬆️
+          </button>
+        }
+      </div>
+
+      <!-- Logs List -->
+      <div class="logs__list" #logsList>
+        @if (filteredLogs().length > 0) {
+          @for (log of paginatedLogs(); track log.id; let i = $index) {
+            <div class="logs__entry" [ngClass]="'logs__entry--' + log.level">
+              <div class="logs__entry-header" (click)="toggleExpand(i)">
+                <span class="logs__entry-level" [ngClass]="'logs__level--' + log.level">
+                  {{ getLevelIcon(log.level) }}
+                </span>
+                <span class="logs__entry-timestamp">{{ log.timestamp | date: 'medium' }}</span>
+                <span class="logs__entry-server">{{ log.server }}</span>
+                <span class="logs__entry-message">{{ log.message | slice: 0: 100 }}</span>
+                <span class="logs__entry-expand">{{ expandedLogs().includes(i) ? '▼' : '▶' }}</span>
+              </div>
+
+              @if (expandedLogs().includes(i)) {
+                <div class="logs__entry-details">
+                  <div class="logs__detail-section">
+                    <strong>Message:</strong>
+                    <p>{{ log.message }}</p>
+                  </div>
+
+                  @if (log.stackTrace) {
+                    <div class="logs__detail-section logs__detail-section--code">
+                      <strong>Stack Trace:</strong>
+                      <pre>{{ log.stackTrace }}</pre>
+                    </div>
+                  }
+
+                  @if (log.metadata && (log.metadata | keyvalue).length > 0) {
+                    <div class="logs__detail-section">
+                      <strong>Metadata:</strong>
+                      <div class="logs__metadata">
+                        @for (item of log.metadata | keyvalue; track item.key) {
+                          <div class="logs__metadata-item">
+                            <span class="logs__metadata-key">{{ item.key }}:</span>
+                            <span class="logs__metadata-value">{{ item.value }}</span>
+                          </div>
+                        }
+                      </div>
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          }
+        } @else {
+          <div class="logs__empty">
+            <p>No logs found matching your filters.</p>
+          </div>
+        }
+      </div>
+
+      <!-- Pagination -->
+      @if (totalPages() > 1) {
+        <div class="logs__pagination">
+          <button
+            class="logs__pagination-btn"
+            [disabled]="currentPage() === 1"
+            (click)="previousPage()">
+            ← Previous
+          </button>
+          <span class="logs__pagination-info">
+            Page {{ currentPage() }} of {{ totalPages() }}
+          </span>
+          <button
+            class="logs__pagination-btn"
+            [disabled]="currentPage() === totalPages()"
+            (click)="nextPage()">
+            Next →
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+</div>

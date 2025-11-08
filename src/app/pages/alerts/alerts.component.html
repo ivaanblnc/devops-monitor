@@ -1,0 +1,222 @@
+<div class="alerts">
+  <!-- Header -->
+  <div class="alerts__header">
+    <h1>Alerts</h1>
+    <button class="alerts__btn-add" (click)="openAddModal()">+ New Alert</button>
+  </div>
+
+  <!-- Stats -->
+  <div class="alerts__stats">
+    <div class="alerts__stat">
+      <span class="alerts__stat-label">Total Alerts</span>
+      <span class="alerts__stat-value">{{ allAlerts().length }}</span>
+    </div>
+    <div class="alerts__stat">
+      <span class="alerts__stat-label">Active</span>
+      <span class="alerts__stat-value">{{ activeAlerts().length }}</span>
+    </div>
+    <div class="alerts__stat">
+      <span class="alerts__stat-label">Critical</span>
+      <span class="alerts__stat-value alerts__stat-value--error">{{ criticalAlerts().length }}</span>
+    </div>
+  </div>
+
+  <!-- Alerts Grid -->
+  <div class="alerts__grid">
+    @for (alert of allAlerts(); track alert.id) {
+      <div class="alerts__card" [class.alerts__card--inactive]="!alert.active">
+        <div class="alerts__card-header">
+          <h3 class="alerts__card-title">{{ alert.name }}</h3>
+          <span class="alerts__severity" [ngClass]="'alerts__severity--' + alert.severity">
+            {{ alert.severity | uppercase }}
+          </span>
+        </div>
+
+        <div class="alerts__card-condition">
+          <p class="alerts__condition-text">{{ getConditionText(alert) }}</p>
+        </div>
+
+        <div class="alerts__card-channels">
+          @if (alert.channels.email.enabled) {
+            <span class="alerts__channel">📧 Email</span>
+          }
+          @if (alert.channels.slack.enabled) {
+            <span class="alerts__channel">💬 Slack</span>
+          }
+          @if (alert.channels.sms.enabled) {
+            <span class="alerts__channel">📱 SMS</span>
+          }
+        </div>
+
+        <div class="alerts__card-footer">
+          <div class="alerts__card-stats">
+            <span class="alerts__stat-small">Triggered: {{ alert.triggeredCount }}</span>
+            @if (alert.lastTriggered) {
+              <span class="alerts__stat-small">Last: {{ alert.lastTriggered | date: 'short' }}</span>
+            }
+          </div>
+
+          <div class="alerts__card-actions">
+            <label class="alerts__toggle">
+              <input
+                type="checkbox"
+                [checked]="alert.active"
+                (change)="toggleAlert(alert.id, $event)"
+                class="alerts__toggle-input" />
+              <span class="alerts__toggle-switch"></span>
+            </label>
+            <button class="alerts__btn-edit" (click)="editAlert(alert)">✏️</button>
+            <button class="alerts__btn-delete" (click)="deleteAlert(alert.id)">🗑️</button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Modal -->
+  @if (showModal()) {
+    <div class="alerts__modal-overlay" (click)="closeModal()">
+      <div class="alerts__modal" (click)="$event.stopPropagation()">
+        <div class="alerts__modal-header">
+          <h2>{{ editingAlert() ? 'Edit Alert' : 'Create Alert' }}</h2>
+          <button class="alerts__modal-close" (click)="closeModal()">✕</button>
+        </div>
+
+        <form class="alerts__form" (ngSubmit)="submitForm()">
+          <div class="alerts__form-group">
+            <label>Alert Name *</label>
+            <input
+              type="text"
+              [(ngModel)]="formData.name"
+              name="name"
+              placeholder="e.g., High CPU Usage"
+              maxlength="50"
+              required />
+          </div>
+
+          <div class="alerts__form-group">
+            <label>Metric *</label>
+            <select [(ngModel)]="formData.metric" name="metric" required>
+              <option value="">Select Metric</option>
+              <option value="cpu">CPU Usage</option>
+              <option value="memory">Memory Usage</option>
+              <option value="disk">Disk Usage</option>
+              <option value="network">Network Traffic</option>
+              <option value="responseTime">Response Time</option>
+              <option value="errorRate">Error Rate</option>
+            </select>
+          </div>
+
+          <div class="alerts__form-row">
+            <div class="alerts__form-group">
+              <label>Operator *</label>
+              <select [(ngModel)]="formData.operator" name="operator" required>
+                <option value=">">&gt;</option>
+                <option value="<">&lt;</option>
+                <option value="=">==</option>
+                <option value="!=">!=</option>
+                <option value=">=">&gt;=</option>
+                <option value="<=">&lt;=</option>
+              </select>
+            </div>
+
+            <div class="alerts__form-group">
+              <label>Threshold *</label>
+              <input
+                type="number"
+                [(ngModel)]="formData.threshold"
+                name="threshold"
+                placeholder="e.g., 80"
+                required />
+            </div>
+
+            <div class="alerts__form-group">
+              <label>Duration (min) *</label>
+              <input
+                type="number"
+                [(ngModel)]="formData.duration"
+                name="duration"
+                placeholder="e.g., 5"
+                required />
+            </div>
+          </div>
+
+          <div class="alerts__form-group">
+            <label>Severity *</label>
+            <div class="alerts__severity-options">
+              <label class="alerts__radio">
+                <input type="radio" [(ngModel)]="formData.severity" name="severity" value="critical" />
+                <span class="alerts__radio-label">🔴 Critical</span>
+              </label>
+              <label class="alerts__radio">
+                <input type="radio" [(ngModel)]="formData.severity" name="severity" value="warning" />
+                <span class="alerts__radio-label">🟡 Warning</span>
+              </label>
+              <label class="alerts__radio">
+                <input type="radio" [(ngModel)]="formData.severity" name="severity" value="info" />
+                <span class="alerts__radio-label">ℹ️ Info</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="alerts__form-group">
+            <label>📧 Email Notifications</label>
+            <label class="alerts__checkbox">
+              <input type="checkbox" [(ngModel)]="formData.emailEnabled" name="emailEnabled" />
+              <span>Enable Email</span>
+            </label>
+            @if (formData.emailEnabled) {
+              <input
+                type="text"
+                [(ngModel)]="formData.emailAddresses"
+                name="emailAddresses"
+                placeholder="admin@example.com, ops@example.com"
+                class="alerts__form-input" />
+            }
+          </div>
+
+          <div class="alerts__form-group">
+            <label>💬 Slack Notifications</label>
+            <label class="alerts__checkbox">
+              <input type="checkbox" [(ngModel)]="formData.slackEnabled" name="slackEnabled" />
+              <span>Enable Slack</span>
+            </label>
+            @if (formData.slackEnabled) {
+              <input
+                type="text"
+                [(ngModel)]="formData.slackWebhook"
+                name="slackWebhook"
+                placeholder="https://hooks.slack.com/services/..."
+                class="alerts__form-input" />
+            }
+          </div>
+
+          <div class="alerts__form-group">
+            <label>📱 SMS Notifications</label>
+            <label class="alerts__checkbox">
+              <input type="checkbox" [(ngModel)]="formData.smsEnabled" name="smsEnabled" />
+              <span>Enable SMS</span>
+            </label>
+            @if (formData.smsEnabled) {
+              <input
+                type="text"
+                [(ngModel)]="formData.smsNumbers"
+                name="smsNumbers"
+                placeholder="+1234567890, +0987654321"
+                class="alerts__form-input" />
+            }
+          </div>
+
+          <div class="alerts__form-actions">
+            <button type="button" class="alerts__btn-cancel" (click)="closeModal()">
+              Cancel
+            </button>
+            <button type="submit" class="alerts__btn-submit">
+              {{ editingAlert() ? 'Update' : 'Create' }} Alert
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+</div>

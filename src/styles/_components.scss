@@ -1,0 +1,610 @@
+// ═══════════════════════════════════════════════════════════════════
+// BUTTONS
+// ═══════════════════════════════════════════════════════════════════
+
+.btn {
+  @include button-base;
+  background: $color-accent;
+  color: white;
+
+  &:hover:not(:disabled) {
+    background: $color-accent-hover;
+    box-shadow: $shadow-md;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  &--primary {
+    @include button-primary;
+  }
+
+  &--secondary {
+    @include button-secondary;
+  }
+
+  &--danger {
+    @include button-danger;
+  }
+
+  &--sm {
+    padding: $btn-padding-y-sm $btn-padding-x-sm;
+    font-size: $font-size-sm;
+  }
+
+  &--lg {
+    padding: $btn-padding-y-lg $btn-padding-x-lg;
+    font-size: $font-size-lg;
+  }
+
+  &--block {
+    width: 100%;
+  }
+
+  &--loading {
+    position: relative;
+    color: transparent;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      top: 50%;
+      left: 50%;
+      margin-left: -8px;
+      margin-top: -8px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 0.6s linear infinite;
+    }
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CARDS
+// ═══════════════════════════════════════════════════════════════════
+
+.card {
+  @include card;
+
+  &--glass {
+    @include card-glass;
+  }
+
+  &__header {
+    margin-bottom: $space-4;
+    padding-bottom: $space-4;
+    border-bottom: 1px solid $color-border;
+    @include flex-between;
+  }
+
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin: 0;
+  }
+
+  &__subtitle {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    margin: 0;
+  }
+
+  &__body {
+    color: $color-text-secondary;
+  }
+
+  &__footer {
+    margin-top: $space-4;
+    padding-top: $space-4;
+    border-top: 1px solid $color-border;
+    @include flex-end;
+    gap: $space-3;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// BADGES
+// ═══════════════════════════════════════════════════════════════════
+
+.badge {
+  @include badge;
+
+  &--primary {
+    @include badge-primary;
+  }
+
+  &--success {
+    @include badge-success;
+  }
+
+  &--warning {
+    @include badge-warning;
+  }
+
+  &--error {
+    @include badge-error;
+  }
+
+  &--info {
+    @include badge;
+    background: rgba($color-info, 0.15);
+    color: $color-info;
+  }
+
+  &--dot {
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: $space-2;
+    }
+  }
+
+  &--success.badge--dot::before {
+    background: $color-success;
+  }
+
+  &--warning.badge--dot::before {
+    background: $color-warning;
+  }
+
+  &--error.badge--dot::before {
+    background: $color-error;
+  }
+
+  &--info.badge--dot::before {
+    background: $color-info;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// FORM CONTROLS
+// ═══════════════════════════════════════════════════════════════════
+
+.form-group {
+  margin-bottom: $space-6;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.form-label {
+  display: block;
+  margin-bottom: $space-2;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+  font-size: $font-size-sm;
+
+  &--required::after {
+    content: ' *';
+    color: $color-error;
+  }
+}
+
+.form-control {
+  @include input-base;
+
+  &:focus {
+    border-color: $color-accent;
+    box-shadow: 0 0 0 3px rgba($color-accent, 0.1);
+  }
+
+  &--error {
+    border-color: $color-error;
+    box-shadow: 0 0 0 3px rgba($color-error, 0.1);
+  }
+
+  &--success {
+    border-color: $color-success;
+    box-shadow: 0 0 0 3px rgba($color-success, 0.1);
+  }
+}
+
+.form-help {
+  display: block;
+  margin-top: $space-2;
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.form-error {
+  display: block;
+  margin-top: $space-2;
+  font-size: $font-size-sm;
+  color: $color-error;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CHECKBOX & RADIO
+// ═══════════════════════════════════════════════════════════════════
+
+.checkbox,
+.radio {
+  @include flex-start;
+  gap: $space-3;
+  cursor: pointer;
+  user-select: none;
+
+  input {
+    cursor: pointer;
+    margin: 0;
+    width: auto;
+  }
+
+  label {
+    margin: 0;
+    cursor: pointer;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// SWITCH / TOGGLE
+// ═══════════════════════════════════════════════════════════════════
+
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-3;
+}
+
+.switch__toggle {
+  position: relative;
+  width: 48px;
+  height: 28px;
+  background: $color-border;
+  border-radius: $radius-full;
+  cursor: pointer;
+  transition: background $transition-base;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: white;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: left $transition-base;
+  }
+
+  &:hover {
+    background: $color-border-hover;
+  }
+}
+
+.switch input {
+  display: none;
+
+  &:checked + .switch__toggle {
+    background: $color-success;
+
+    &::after {
+      left: 22px;
+    }
+  }
+
+  &:disabled + .switch__toggle {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MODAL / DIALOG
+// ═══════════════════════════════════════════════════════════════════
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: $z-modal-backdrop;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-4;
+  overflow-y: auto;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity $transition-base, visibility $transition-base;
+
+  &.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.modal__content {
+  position: relative;
+  background: $color-bg-secondary;
+  border-radius: $radius-lg;
+  border: 1px solid $color-border;
+  box-shadow: $shadow-2xl;
+  width: 100%;
+  max-width: 600px;
+  animation: slideUp $transition-base ease-out;
+
+  &--small {
+    max-width: 400px;
+  }
+
+  &--large {
+    max-width: 800px;
+  }
+}
+
+.modal__header {
+  @include flex-between;
+  padding: $space-6;
+  border-bottom: 1px solid $color-border;
+}
+
+.modal__title {
+  margin: 0;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+}
+
+.modal__close {
+  background: none;
+  border: none;
+  font-size: $font-size-lg;
+  color: $color-text-secondary;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  @include flex-center;
+  border-radius: $radius-base;
+  transition: all $transition-base;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: $color-text-primary;
+  }
+}
+
+.modal__body {
+  padding: $space-6;
+  overflow-y: auto;
+  max-height: calc(100vh - 220px);
+}
+
+.modal__footer {
+  @include flex-end;
+  gap: $space-3;
+  padding: $space-6;
+  border-top: 1px solid $color-border;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// ALERT / TOAST
+// ═══════════════════════════════════════════════════════════════════
+
+.alert {
+  padding: $space-4;
+  border-radius: $radius-base;
+  border-left: 4px solid;
+  @include flex-between;
+
+  &__content {
+    flex: 1;
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    font-size: $font-size-lg;
+    padding: 0;
+    margin-left: $space-4;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  &--success {
+    background: rgba($color-success, 0.1);
+    border-color: $color-success;
+    color: $color-success;
+  }
+
+  &--error {
+    background: rgba($color-error, 0.1);
+    border-color: $color-error;
+    color: $color-error;
+  }
+
+  &--warning {
+    background: rgba($color-warning, 0.1);
+    border-color: $color-warning;
+    color: $color-warning;
+  }
+
+  &--info {
+    background: rgba($color-info, 0.1);
+    border-color: $color-info;
+    color: $color-info;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// TOAST NOTIFICATIONS
+// ═══════════════════════════════════════════════════════════════════
+
+.toast-container {
+  position: fixed;
+  top: $space-6;
+  right: $space-6;
+  z-index: $z-tooltip;
+  pointer-events: none;
+
+  @include max-width('md') {
+    top: $space-4;
+    right: $space-4;
+    left: $space-4;
+  }
+}
+
+.toast {
+  @include card;
+  box-shadow: $shadow-xl;
+  margin-bottom: $space-3;
+  pointer-events: auto;
+  animation: slideInLeft $transition-base ease-out;
+  max-width: 400px;
+
+  @include max-width('md') {
+    max-width: 100%;
+  }
+
+  &--success {
+    border-left: 4px solid $color-success;
+  }
+
+  &--error {
+    border-left: 4px solid $color-error;
+  }
+
+  &--warning {
+    border-left: 4px solid $color-warning;
+  }
+
+  &--info {
+    border-left: 4px solid $color-info;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PROGRESS BAR
+// ═══════════════════════════════════════════════════════════════════
+
+.progress {
+  width: 100%;
+  height: 6px;
+  background: $color-bg-tertiary;
+  border-radius: $radius-full;
+  overflow: hidden;
+}
+
+.progress__bar {
+  height: 100%;
+  background: $color-accent;
+  border-radius: $radius-full;
+  transition: width $transition-base;
+
+  &--success {
+    background: $color-success;
+  }
+
+  &--warning {
+    background: $color-warning;
+  }
+
+  &--error {
+    background: $color-error;
+  }
+
+  &--animated {
+    animation: progress 2s ease-in-out infinite;
+  }
+}
+
+@keyframes progress {
+  0% {
+    width: 0%;
+  }
+  50% {
+    width: 100%;
+  }
+  100% {
+    width: 0%;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// DROPDOWN
+// ═══════════════════════════════════════════════════════════════════
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown__trigger {
+  @include button-secondary;
+}
+
+.dropdown__menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: $color-bg-secondary;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  box-shadow: $shadow-lg;
+  z-index: $z-dropdown;
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity $transition-base, transform $transition-base,
+    visibility $transition-base;
+
+  &.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
+.dropdown__item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: $space-3 $space-4;
+  border: none;
+  background: none;
+  color: $color-text-primary;
+  cursor: pointer;
+  transition: background $transition-base;
+  font-size: $font-size-sm;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: $color-accent;
+  }
+
+  &:first-child {
+    border-radius: $radius-md $radius-md 0 0;
+  }
+
+  &:last-child {
+    border-radius: 0 0 $radius-md $radius-md;
+  }
+
+  &.is-active {
+    background: rgba($color-accent, 0.1);
+    color: $color-accent;
+  }
+}

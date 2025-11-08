@@ -1,1 +1,224 @@
-/* You can add global styles to this file, and also import other style files */
+// ═══════════════════════════════════════════════════════════════════
+// DEVOPS MONITORING PLATFORM - MAIN STYLESHEET
+// ═══════════════════════════════════════════════════════════════════
+
+// Import design system
+@import 'styles/variables';
+@import 'styles/mixins';
+@import 'styles/base';
+@import 'styles/components';
+@import 'styles/utilities';
+
+// ═══════════════════════════════════════════════════════════════════
+// LIGHT MODE SUPPORT
+// ═══════════════════════════════════════════════════════════════════
+
+body.light-mode {
+  color: $color-text-primary-light;
+  background: $color-bg-primary-light;
+
+  // Update card styles for light mode
+  .card {
+    background: $color-bg-secondary-light;
+    border-color: $color-border-light;
+
+    &:hover {
+      border-color: $color-border-hover-light;
+    }
+  }
+
+  .card--glass {
+    @include glass-effect(0.05);
+  }
+
+  // Update form elements for light mode
+  input,
+  textarea,
+  select {
+    background: $color-bg-secondary-light;
+    color: $color-text-primary-light;
+    border-color: $color-border-light;
+
+    &::placeholder {
+      color: $color-text-tertiary-light;
+    }
+
+    &:hover {
+      border-color: $color-border-hover-light;
+    }
+  }
+
+  // Update code blocks for light mode
+  code,
+  pre {
+    background: $color-bg-tertiary-light;
+    color: $color-text-secondary-light;
+  }
+
+  // Update text colors for light mode
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: $color-text-primary-light;
+  }
+
+  p {
+    color: $color-text-secondary-light;
+  }
+
+  // Update modal for light mode
+  .modal__content {
+    background: $color-bg-secondary-light;
+    border-color: $color-border-light;
+  }
+
+  // Update alert for light mode
+  .alert {
+    border-color: $color-border-light;
+  }
+
+  // Update toast for light mode
+  .toast {
+    background: $color-bg-secondary-light;
+    border-color: $color-border-light;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// APP-SPECIFIC STYLES
+// ═══════════════════════════════════════════════════════════════════
+
+app-root {
+  display: flex;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+// Main layout container
+.app-container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+// Sidebar container
+.app-sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: $sidebar-width;
+  height: 100vh;
+  z-index: $z-fixed;
+  border-right: 1px solid $color-border;
+  overflow-y: auto;
+  @include custom-scrollbar;
+
+  @include max-width('md') {
+    position: fixed;
+    transform: translateX(-100%);
+    transition: transform $transition-base;
+    z-index: $z-offcanvas;
+
+    &.is-open {
+      transform: translateX(0);
+    }
+  }
+}
+
+// Main content area
+.app-content {
+  flex: 1;
+  margin-left: $sidebar-width;
+  display: flex;
+  flex-direction: column;
+
+  @include max-width('md') {
+    margin-left: 0;
+    margin-top: $navbar-height;
+  }
+}
+
+// Navbar
+.app-navbar {
+  display: none;
+
+  @include max-width('md') {
+    display: flex;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: $navbar-height;
+    background: $color-bg-secondary;
+    border-bottom: 1px solid $color-border;
+    z-index: $z-fixed;
+  }
+}
+
+// Page content
+.app-page {
+  flex: 1;
+  padding: $space-8;
+  overflow-y: auto;
+  @include custom-scrollbar;
+
+  @include max-width('md') {
+    padding: $space-4;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// GLOBAL ANIMATIONS
+// ═══════════════════════════════════════════════════════════════════
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PREVENT LAYOUT SHIFT
+// ═══════════════════════════════════════════════════════════════════
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+}

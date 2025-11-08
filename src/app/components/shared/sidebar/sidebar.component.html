@@ -1,0 +1,37 @@
+<aside class="sidebar">
+  <!-- Logo Section -->
+  <div class="sidebar__logo">
+    <div class="sidebar__logo-icon">📊</div>
+    <div class="sidebar__logo-text">
+      <h1>DevOps Monitor</h1>
+      <p>v1.0.0</p>
+    </div>
+  </div>
+
+  <!-- Navigation Menu -->
+  <nav class="sidebar__nav">
+    @for (item of navItems; track item.path) {
+      <a
+        class="sidebar__nav-item"
+        [routerLink]="item.path"
+        routerLinkActive="sidebar__nav-item--active">
+        <span class="sidebar__nav-icon">{{ item.icon }}</span>
+        <span class="sidebar__nav-label">{{ item.label }}</span>
+      </a>
+    }
+  </nav>
+
+  <!-- User Profile Section -->
+  <div class="sidebar__footer">
+    <button class="sidebar__theme-toggle" (click)="toggleTheme()" [title]="'Switch to ' + (themeService.isLightMode() ? 'dark' : 'light') + ' mode'">
+      <span>{{ themeService.isDarkMode() ? '🌙' : '☀️' }}</span>
+    </button>
+    <div class="sidebar__user">
+      <div class="sidebar__user-avatar">👤</div>
+      <div class="sidebar__user-info">
+        <p class="sidebar__user-name">Admin</p>
+        <p class="sidebar__user-role">Administrator</p>
+      </div>
+    </div>
+  </div>
+</aside>

@@ -1,0 +1,209 @@
+.navbar {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--color-border);
+  z-index: 1020;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-4);
+  gap: var(--space-4);
+
+  @media (max-width: 768px) {
+    display: flex;
+  }
+}
+
+.navbar__menu-btn {
+  background: none;
+  border: none;
+  color: var(--color-text-primary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: var(--space-2);
+  transition: all var(--transition-base);
+
+  &:hover {
+    color: var(--color-accent);
+  }
+}
+
+.navbar__title {
+  flex: 1;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  text-align: center;
+}
+
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.navbar__action {
+  position: relative;
+  background: none;
+  border: none;
+  color: var(--color-text-primary);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: var(--space-2);
+  transition: all var(--transition-base);
+
+  &:hover {
+    color: var(--color-accent);
+  }
+}
+
+.navbar__badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: var(--color-error);
+  border-radius: 50%;
+  font-size: 0.75rem;
+  color: white;
+  font-weight: 700;
+}
+
+.navbar__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+/* Notifications Dropdown */
+.navbar__notifications {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 320px;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  z-index: 1030;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity var(--transition-base), transform var(--transition-base),
+    visibility var(--transition-base);
+
+  &.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
+.navbar__notifications-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+
+  h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+}
+
+.navbar__close-btn {
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  font-size: 1.25rem;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color-text-primary);
+  }
+}
+
+.navbar__notifications-body {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: var(--space-3) 0;
+}
+
+.navbar__notification-item {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  cursor: pointer;
+  transition: background var(--transition-base);
+  border-left: 4px solid transparent;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  &--success {
+    border-left-color: var(--color-success);
+  }
+
+  &--error {
+    border-left-color: var(--color-error);
+  }
+
+  &--warning {
+    border-left-color: var(--color-warning);
+  }
+
+  &--info {
+    border-left-color: var(--color-info);
+  }
+}
+
+.navbar__notification-type {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.navbar__notification-message {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+.navbar__notifications-empty {
+  text-align: center;
+  padding: var(--space-6) var(--space-4);
+  color: var(--color-text-tertiary);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.navbar__notifications-footer {
+  display: block;
+  padding: var(--space-4);
+  text-align: center;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-accent);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all var(--transition-base);
+
+  &:hover {
+    background: rgba(14, 165, 233, 0.1);
+  }
+}

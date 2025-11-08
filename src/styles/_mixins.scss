@@ -1,0 +1,460 @@
+// ═══════════════════════════════════════════════════════════════════
+// RESPONSIVE DESIGN MIXINS
+// ═══════════════════════════════════════════════════════════════════
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == 'xs' {
+    @media (min-width: $breakpoint-xs) {
+      @content;
+    }
+  } @else if $breakpoint == 'sm' {
+    @media (min-width: $breakpoint-sm) {
+      @content;
+    }
+  } @else if $breakpoint == 'md' {
+    @media (min-width: $breakpoint-md) {
+      @content;
+    }
+  } @else if $breakpoint == 'lg' {
+    @media (min-width: $breakpoint-lg) {
+      @content;
+    }
+  } @else if $breakpoint == 'xl' {
+    @media (min-width: $breakpoint-xl) {
+      @content;
+    }
+  } @else if $breakpoint == '2xl' {
+    @media (min-width: $breakpoint-2xl) {
+      @content;
+    }
+  }
+}
+
+@mixin max-width($breakpoint) {
+  @if $breakpoint == 'xs' {
+    @media (max-width: $breakpoint-xs) {
+      @content;
+    }
+  } @else if $breakpoint == 'sm' {
+    @media (max-width: $breakpoint-sm) {
+      @content;
+    }
+  } @else if $breakpoint == 'md' {
+    @media (max-width: $breakpoint-md) {
+      @content;
+    }
+  } @else if $breakpoint == 'lg' {
+    @media (max-width: $breakpoint-lg) {
+      @content;
+    }
+  } @else if $breakpoint == 'xl' {
+    @media (max-width: $breakpoint-xl) {
+      @content;
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// FLEXBOX UTILITIES
+// ═══════════════════════════════════════════════════════════════════
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+@mixin flex-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+@mixin flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-col-center {
+  @include flex-col;
+  align-items: center;
+  justify-content: center;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// GRID UTILITIES
+// ═══════════════════════════════════════════════════════════════════
+
+@mixin grid-auto-fit($min-width) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($min-width, 1fr));
+}
+
+@mixin grid-auto-fill($min-width) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($min-width, 1fr));
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// TEXT & TYPOGRAPHY
+// ═══════════════════════════════════════════════════════════════════
+
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin multiline-truncate($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin text-ellipsis {
+  @include truncate;
+}
+
+@mixin text-gradient($from, $to) {
+  background: linear-gradient(135deg, $from, $to);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// BACKGROUND & GLASS EFFECTS
+// ═══════════════════════════════════════════════════════════════════
+
+@mixin glass-effect($opacity: 0.08) {
+  background: rgba(30, 41, 59, $opacity);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+@mixin card {
+  background: $color-bg-secondary;
+  border-radius: $radius-lg;
+  padding: $card-padding;
+  border: 1px solid $color-border;
+  transition: all $transition-base;
+
+  &:hover {
+    border-color: $color-border-hover;
+    box-shadow: $shadow-md;
+  }
+}
+
+@mixin card-glass {
+  @include glass-effect(0.03);
+  border-radius: $radius-lg;
+  padding: $card-padding;
+  transition: all $transition-base;
+
+  &:hover {
+    @include glass-effect(0.05);
+    box-shadow: $shadow-lg;
+    transform: translateY(-2px);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// SHADOWS & DEPTH
+// ═══════════════════════════════════════════════════════════════════
+
+@mixin shadow-interactive {
+  box-shadow: $shadow-base;
+  transition: box-shadow $transition-base;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// SCROLLING & OVERFLOW
+// ═══════════════════════════════════════════════════════════════════
+
+@mixin smooth-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+@mixin custom-scrollbar($size: 8px, $track-bg: $color-bg-tertiary, $thumb-bg: $color-border) {
+  scrollbar-width: thin;
+  scrollbar-color: $thumb-bg $track-bg;
+
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $track-bg;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $thumb-bg;
+    border-radius: $radius-full;
+
+    &:hover {
+      background: lighten($thumb-bg, 10%);
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// FOCUS & ACCESSIBILITY
+// ═══════════════════════════════════════════════════════════════════
+
+@mixin focus-ring($color: $color-accent, $offset: 2px) {
+  outline: 2px solid $color;
+  outline-offset: $offset;
+}
+
+@mixin focus-visible {
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// ANIMATIONS
+// ═══════════════════════════════════════════════════════════════════
+
+@mixin fade-in {
+  animation: fadeIn $transition-base ease-out;
+}
+
+@mixin slide-up {
+  animation: slideUp $transition-base ease-out;
+}
+
+@mixin slide-in-left {
+  animation: slideInLeft $transition-base ease-out;
+}
+
+@mixin pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// FORM ELEMENTS
+// ═══════════════════════════════════════════════════════════════════
+
+@mixin input-base {
+  width: 100%;
+  padding: $input-padding-y $input-padding-x;
+  background: $color-bg-tertiary;
+  border: 1px solid $color-border;
+  border-radius: $radius-base;
+  color: $color-text-primary;
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  transition: all $transition-base;
+
+  &::placeholder {
+    color: $color-text-tertiary;
+  }
+
+  &:hover {
+    border-color: $color-border-hover;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+    box-shadow: 0 0 0 3px rgba($color-accent, 0.1);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  padding: $btn-padding-y-base $btn-padding-x-base;
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  font-weight: $btn-font-weight;
+  border: none;
+  border-radius: $btn-border-radius;
+  cursor: pointer;
+  transition: $btn-transition;
+  white-space: nowrap;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@mixin button-primary {
+  @include button-base;
+  background: $color-accent;
+  color: white;
+
+  &:hover:not(:disabled) {
+    background: $color-accent-hover;
+    box-shadow: $shadow-md;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+}
+
+@mixin button-secondary {
+  @include button-base;
+  background: transparent;
+  color: $color-text-primary;
+  border: 1px solid $color-border;
+
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: $color-border-hover;
+  }
+}
+
+@mixin button-danger {
+  @include button-base;
+  background: $color-error;
+  color: white;
+
+  &:hover:not(:disabled) {
+    background: lighten($color-error, 5%);
+    box-shadow: $shadow-md;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// BADGES & PILLS
+// ═══════════════════════════════════════════════════════════════════
+
+@mixin badge {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border-radius: $radius-full;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  white-space: nowrap;
+}
+
+@mixin badge-primary {
+  @include badge;
+  background: rgba($color-accent, 0.15);
+  color: $color-accent;
+}
+
+@mixin badge-success {
+  @include badge;
+  background: rgba($color-success, 0.15);
+  color: $color-success;
+}
+
+@mixin badge-warning {
+  @include badge;
+  background: rgba($color-warning, 0.15);
+  color: $color-warning;
+}
+
+@mixin badge-error {
+  @include badge;
+  background: rgba($color-error, 0.15);
+  color: $color-error;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// UTILITIES
+// ═══════════════════════════════════════════════════════════════════
+
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

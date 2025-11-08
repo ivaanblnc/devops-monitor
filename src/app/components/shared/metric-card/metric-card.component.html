@@ -1,0 +1,21 @@
+<div class="metric-card card card--glass">
+  <div class="metric-card__header">
+    <div class="metric-card__icon" [ngClass]="'metric-card__icon--' + icon()">
+      📊
+    </div>
+    <div class="metric-card__status" [ngClass]="'metric-card__status--' + status()"></div>
+  </div>
+
+  <div class="metric-card__body">
+    <h3 class="metric-card__label">{{ label() }}</h3>
+    <div class="metric-card__value">
+      <span class="metric-card__number">{{ displayValue() }}</span>
+      <span class="metric-card__unit">{{ unit() }}</span>
+    </div>
+    <div class="metric-card__footer">
+      <span class="metric-card__trend" [ngClass]="'metric-card__trend--' + trend()">
+        {{ trendArrow() }} {{ Math.abs(change()) }}%
+      </span>
+    </div>
+  </div>
+</div>

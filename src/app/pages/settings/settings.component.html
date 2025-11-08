@@ -1,0 +1,214 @@
+<div class="settings">
+  <div class="settings__header">
+    <h1>Settings</h1>
+  </div>
+
+  <div class="settings__container">
+    <!-- General Section -->
+    <div class="settings__section">
+      <button class="settings__accordion-header" (click)="toggleSection('general')">
+        <span class="settings__accordion-icon">{{ sectionsOpen()['general'] ? '▼' : '▶' }}</span>
+        <span class="settings__accordion-title">⚙️ General Settings</span>
+      </button>
+
+      @if (sectionsOpen()['general']) {
+        <div class="settings__accordion-content">
+          <!-- Dashboard Refresh Interval -->
+          <div class="settings__field">
+            <label class="settings__label">Dashboard Refresh Interval</label>
+            <div class="settings__slider-group">
+              <input
+                type="range"
+                min="3"
+                max="30"
+                [(ngModel)]="settings.refreshInterval"
+                name="refreshInterval"
+                class="settings__slider" />
+              <span class="settings__slider-value">{{ settings.refreshInterval }}s</span>
+            </div>
+          </div>
+
+          <!-- Timezone -->
+          <div class="settings__field">
+            <label class="settings__label">Timezone</label>
+            <div class="settings__search-box">
+              <input
+                type="text"
+                [(ngModel)]="timezoneSearch"
+                name="timezoneSearch"
+                placeholder="Search timezone..."
+                class="settings__input" />
+            </div>
+            <select [(ngModel)]="settings.timezone" name="timezone" class="settings__select">
+              @for (tz of filteredTimezones(); track tz) {
+                <option [value]="tz">{{ tz }}</option>
+              }
+            </select>
+          </div>
+
+          <!-- Date Format -->
+          <div class="settings__field">
+            <label class="settings__label">Date Format</label>
+            <div class="settings__radio-group">
+              <label class="settings__radio">
+                <input type="radio" [(ngModel)]="settings.dateFormat" name="dateFormat" value="MM/dd/yyyy" />
+                <span>MM/dd/yyyy ({{ 'now' | date: 'MM/dd/yyyy' }})</span>
+              </label>
+              <label class="settings__radio">
+                <input type="radio" [(ngModel)]="settings.dateFormat" name="dateFormat" value="dd/MM/yyyy" />
+                <span>dd/MM/yyyy ({{ 'now' | date: 'dd/MM/yyyy' }})</span>
+              </label>
+              <label class="settings__radio">
+                <input type="radio" [(ngModel)]="settings.dateFormat" name="dateFormat" value="yyyy-MM-dd" />
+                <span>yyyy-MM-dd ({{ 'now' | date: 'yyyy-MM-dd' }})</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Notifications Section -->
+    <div class="settings__section">
+      <button class="settings__accordion-header" (click)="toggleSection('notifications')">
+        <span class="settings__accordion-icon">{{ sectionsOpen()['notifications'] ? '▼' : '▶' }}</span>
+        <span class="settings__accordion-title">🔔 Notification Settings</span>
+      </button>
+
+      @if (sectionsOpen()['notifications']) {
+        <div class="settings__accordion-content">
+          <!-- Email Notifications -->
+          <div class="settings__field">
+            <label class="settings__checkbox">
+              <input type="checkbox" [(ngModel)]="settings.emailNotifications" name="emailNotifications" />
+              <span>📧 Enable Email Notifications</span>
+            </label>
+            @if (settings.emailNotifications) {
+              <input
+                type="email"
+                [(ngModel)]="settings.emailAddress"
+                name="emailAddress"
+                placeholder="your@email.com"
+                class="settings__input" />
+              <button class="settings__btn-test" (click)="sendTestEmail()">Send Test Email</button>
+            }
+          </div>
+
+          <!-- Slack Notifications -->
+          <div class="settings__field">
+            <label class="settings__checkbox">
+              <input type="checkbox" [(ngModel)]="settings.slackNotifications" name="slackNotifications" />
+              <span>💬 Enable Slack Notifications</span>
+            </label>
+            @if (settings.slackNotifications) {
+              <input
+                type="text"
+                [(ngModel)]="settings.slackWebhook"
+                name="slackWebhook"
+                placeholder="https://hooks.slack.com/services/..."
+                class="settings__input" />
+              <button class="settings__btn-test" (click)="sendTestSlack()">Send Test Message</button>
+            }
+          </div>
+
+          <!-- SMS Notifications -->
+          <div class="settings__field">
+            <label class="settings__checkbox">
+              <input type="checkbox" [(ngModel)]="settings.smsNotifications" name="smsNotifications" />
+              <span>📱 Enable SMS Notifications</span>
+            </label>
+            @if (settings.smsNotifications) {
+              <input
+                type="tel"
+                [(ngModel)]="settings.smsPhoneNumber"
+                name="smsPhoneNumber"
+                placeholder="+1234567890"
+                class="settings__input" />
+              <button class="settings__btn-test" (click)="sendTestSMS()">Send Test SMS</button>
+            }
+          </div>
+
+          <!-- Quiet Hours -->
+          <div class="settings__field">
+            <label class="settings__label">Quiet Hours</label>
+            <div class="settings__time-range">
+              <input type="time" [(ngModel)]="settings.quietHoursStart" name="quietHoursStart" class="settings__input" />
+              <span>to</span>
+              <input type="time" [(ngModel)]="settings.quietHoursEnd" name="quietHoursEnd" class="settings__input" />
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Display Section -->
+    <div class="settings__section">
+      <button class="settings__accordion-header" (click)="toggleSection('display')">
+        <span class="settings__accordion-icon">{{ sectionsOpen()['display'] ? '▼' : '▶' }}</span>
+        <span class="settings__accordion-title">🎨 Display Settings</span>
+      </button>
+
+      @if (sectionsOpen()['display']) {
+        <div class="settings__accordion-content">
+          <!-- Chart Time Range -->
+          <div class="settings__field">
+            <label class="settings__label">Default Chart Time Range</label>
+            <select [(ngModel)]="settings.chartTimeRange" name="chartTimeRange" class="settings__select">
+              <option value="1h">Last 1 Hour</option>
+              <option value="6h">Last 6 Hours</option>
+              <option value="24h">Last 24 Hours</option>
+              <option value="7d">Last 7 Days</option>
+              <option value="30d">Last 30 Days</option>
+            </select>
+          </div>
+
+          <!-- Logs Per Page -->
+          <div class="settings__field">
+            <label class="settings__label">Logs Per Page</label>
+            <input type="number" [(ngModel)]="settings.logsPerPage" name="logsPerPage" min="10" max="500" class="settings__input" />
+          </div>
+
+          <!-- Animations -->
+          <div class="settings__field">
+            <label class="settings__checkbox">
+              <input type="checkbox" [(ngModel)]="settings.enableAnimations" name="enableAnimations" />
+              <span>Enable Animations</span>
+            </label>
+          </div>
+
+          <!-- Display Density -->
+          <div class="settings__field">
+            <label class="settings__label">Display Density</label>
+            <div class="settings__radio-group">
+              <label class="settings__radio">
+                <input type="radio" [(ngModel)]="settings.displayDensity" name="displayDensity" value="comfortable" />
+                <span>😌 Comfortable (More Spacing)</span>
+              </label>
+              <label class="settings__radio">
+                <input type="radio" [(ngModel)]="settings.displayDensity" name="displayDensity" value="compact" />
+                <span>🎯 Compact (Normal Spacing)</span>
+              </label>
+              <label class="settings__radio">
+                <input type="radio" [(ngModel)]="settings.displayDensity" name="displayDensity" value="dense" />
+                <span>⚡ Dense (Minimal Spacing)</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Save Button -->
+  <div class="settings__footer" [class.settings__footer--dirty]="isDirty()">
+    <button
+      class="settings__btn-save"
+      [disabled]="!isDirty()"
+      (click)="saveSettings()">
+      💾 Save Settings
+    </button>
+    @if (isDirty()) {
+      <span class="settings__unsaved-msg">You have unsaved changes</span>
+    }
+  </div>
+</div>

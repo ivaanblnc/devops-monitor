@@ -1,0 +1,71 @@
+/**
+ * App Layout Styles
+ * Main layout container with sidebar and content area
+ */
+
+:host {
+  --app-sidebar-width: 240px;
+  --app-navbar-height: 60px;
+}
+
+.app-wrapper {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  background: var(--color-bg-primary);
+
+  @media (max-width: 768px) {
+    height: auto;
+    min-height: 100vh;
+  }
+}
+
+.app-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  margin-left: var(--app-sidebar-width);
+  transition: margin-left var(--transition-base);
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+  }
+}
+
+.app-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-top: 0;
+  transition: margin-top var(--transition-base);
+
+  @media (max-width: 768px) {
+    margin-top: var(--app-navbar-height);
+  }
+
+  // Custom scrollbar for dark mode
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 4px;
+
+    &:hover {
+      background: var(--color-text-tertiary);
+    }
+  }
+}
+
+/* Light mode */
+:host-context(.light-mode) {
+  .app-wrapper {
+    background: var(--color-bg-primary);
+  }
+}
