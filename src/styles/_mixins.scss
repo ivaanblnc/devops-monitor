@@ -64,6 +64,27 @@
   }
 }
 
+// Tablet-specific mixin (768px - 1024px)
+@mixin tablet-only {
+  @media (min-width: $breakpoint-tablet-portrait) and (max-width: ($breakpoint-tablet-landscape - 1px)) {
+    @content;
+  }
+}
+
+// Tablet and up
+@mixin tablet-and-up {
+  @media (min-width: $breakpoint-tablet-portrait) {
+    @content;
+  }
+}
+
+// Below tablet
+@mixin below-tablet {
+  @media (max-width: ($breakpoint-tablet-portrait - 1px)) {
+    @content;
+  }
+}
+
 // ═══════════════════════════════════════════════════════════════════
 // FLEXBOX UTILITIES - LAYOUT HELPERS
 // ═══════════════════════════════════════════════════════════════════

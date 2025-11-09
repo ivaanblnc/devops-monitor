@@ -20,11 +20,16 @@
     border-color: $color-border-hover;
   }
 
-  @media (max-width: 768px) {
+  @include tablet-only {
+    padding: $space-5;
+    gap: $space-3;
+  }
+
+  @include max-width('md') {
     padding: $space-5;
   }
 
-  @media (max-width: 480px) {
+  @include max-width('sm') {
     padding: $space-4;
   }
 }
@@ -39,7 +44,13 @@
   gap: $space-3;
   margin-bottom: $space-2;
 
-  @media (max-width: 640px) {
+  @include tablet-only {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $space-2;
+  }
+
+  @include max-width('md') {
     flex-direction: column;
     align-items: flex-start;
   }
@@ -89,6 +100,14 @@
   display: block;
   max-height: 400px;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08));
+
+  @include tablet-only {
+    max-height: 350px;
+  }
+
+  @include max-width('md') {
+    max-height: 280px;
+  }
 }
 
 // Loading State
@@ -103,6 +122,10 @@
   padding: $space-8 $space-4;
   color: $color-text-tertiary;
   font-size: 0.875rem;
+
+  @include tablet-only {
+    padding: $space-6 $space-4;
+  }
 }
 
 .chart__spinner {
@@ -130,6 +153,10 @@
   background: rgba(255, 255, 255, 0.02);
   border-radius: $radius-md;
   border: 1px dashed $color-border;
+
+  @include tablet-only {
+    padding: $space-6 $space-4;
+  }
 }
 
 .chart__empty-icon {
@@ -154,7 +181,12 @@
   padding-top: $space-4;
   border-top: 1px solid $color-border;
 
-  @media (max-width: 640px) {
+  @include tablet-only {
+    gap: $space-3;
+    padding-top: $space-3;
+  }
+
+  @include max-width('md') {
     gap: $space-3;
   }
 }
@@ -184,6 +216,10 @@
   &--disabled {
     opacity: 0.4;
     text-decoration: line-through;
+  }
+
+  @include tablet-only {
+    font-size: 0.75rem;
   }
 }
 
@@ -221,7 +257,14 @@
   font-size: 0.8125rem;
   color: $color-text-tertiary;
 
-  @media (max-width: 640px) {
+  @include tablet-only {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $space-2;
+    padding-top: $space-3;
+  }
+
+  @include max-width('md') {
     flex-direction: column;
     align-items: flex-start;
   }
@@ -252,6 +295,15 @@
 
   .chart__canvas {
     max-height: 250px;
+  }
+
+  @include tablet-only {
+    padding: $space-3;
+    gap: $space-2;
+
+    .chart__canvas {
+      max-height: 220px;
+    }
   }
 }
 

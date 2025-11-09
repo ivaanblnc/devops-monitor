@@ -33,7 +33,7 @@
   <div class="navbar__notifications" [class.is-open]="showNotifications()">
     <div class="navbar__notifications-header">
       <h3>Notifications</h3>
-      <button (click)="clearNotifications()" class="navbar__close-btn">✕</button>
+      <button (click)="toggleNotifications()" class="navbar__close-btn" title="Close">✕</button>
     </div>
     <div class="navbar__notifications-body">
       @if (recentToasts().length > 0) {
@@ -47,6 +47,6 @@
         <p class="navbar__notifications-empty">No new notifications</p>
       }
     </div>
-    <a href="/alerts" class="navbar__notifications-footer">View all alerts →</a>
+    <a href="/alerts" class="navbar__notifications-footer" (click)="toggleNotifications()">View all alerts →</a>
   </div>
 </nav>

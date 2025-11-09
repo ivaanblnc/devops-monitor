@@ -64,19 +64,6 @@
 
     <!-- Right Content - Logs List -->
     <div class="logs__content">
-      <!-- Auto-scroll Toggle -->
-      <div class="logs__toolbar">
-        <label class="logs__auto-scroll">
-          <input type="checkbox" [(ngModel)]="autoScroll" name="autoScroll" />
-          <span>Auto-scroll</span>
-        </label>
-        @if (newLogsCount() > 0) {
-          <button class="logs__new-logs-badge" (click)="scrollToTop()">
-            {{ newLogsCount() }} New Logs 
-          </button>
-        }
-      </div>
-
       <!-- Logs List -->
       <div class="logs__list" #logsList>
         @if (filteredLogs().length > 0) {

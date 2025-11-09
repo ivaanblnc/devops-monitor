@@ -8,13 +8,19 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 <div class="app-wrapper">
-  <!-- Sidebar (Desktop) -->
-  <app-sidebar></app-sidebar>
+  <!-- Sidebar (Desktop/Tablet) -->
+  <app-sidebar 
+    [isOpen]="sidebarOpen()"
+    (onToggleSidebar)="toggleSidebar()"
+    (onNavigate)="closeSidebar()"></app-sidebar>
+
+  <!-- Overlay (Mobile/Tablet) -->
+  <div class="app-overlay" [class.is-visible]="sidebarOpen()" (click)="closeSidebar()"></div>
 
   <!-- Main Content -->
   <div class="app-main">
-    <!-- Navbar (Mobile) -->
-    <app-navbar></app-navbar>
+    <!-- Navbar (Mobile/Tablet) -->
+    <app-navbar (onMenuClick)="toggleSidebar()"></app-navbar>
 
     <!-- Page Content -->
     <div class="app-content">

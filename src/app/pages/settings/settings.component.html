@@ -52,15 +52,15 @@
             <div class="settings__radio-group">
               <label class="settings__radio">
                 <input type="radio" [(ngModel)]="settings.dateFormat" name="dateFormat" value="MM/dd/yyyy" />
-                <span>MM/dd/yyyy ({{ 'now' | date: 'MM/dd/yyyy' }})</span>
+                <span>MM/dd/yyyy ({{ currentDate() | date: 'MM/dd/yyyy' }})</span>
               </label>
               <label class="settings__radio">
                 <input type="radio" [(ngModel)]="settings.dateFormat" name="dateFormat" value="dd/MM/yyyy" />
-                <span>dd/MM/yyyy ({{ 'now' | date: 'dd/MM/yyyy' }})</span>
+                <span>dd/MM/yyyy ({{ currentDate() | date: 'dd/MM/yyyy' }})</span>
               </label>
               <label class="settings__radio">
                 <input type="radio" [(ngModel)]="settings.dateFormat" name="dateFormat" value="yyyy-MM-dd" />
-                <span>yyyy-MM-dd ({{ 'now' | date: 'yyyy-MM-dd' }})</span>
+                <span>yyyy-MM-dd ({{ currentDate() | date: 'yyyy-MM-dd' }})</span>
               </label>
             </div>
           </div>

@@ -9,8 +9,12 @@
   animation: fadeIn $transition-base ease-out;
   min-height: 100vh;
 
-  @include max-width('lg') {
+  @include respond-to('lg') {
     padding: $space-6;
+  }
+
+  @include max-width('lg') {
+    padding: $space-5;
   }
 
   @include max-width('md') {
@@ -27,6 +31,12 @@
   margin-bottom: $space-8;
   gap: $space-4;
 
+  @include tablet-only {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: $space-6;
+  }
+
   @include max-width('md') {
     flex-direction: column;
     align-items: flex-start;
@@ -41,6 +51,10 @@
   line-height: $line-height-tight;
   letter-spacing: $letter-spacing-tight;
   color: $color-text-primary;
+
+  @include tablet-only {
+    font-size: $font-size-2xl;
+  }
 
   @include max-width('md') {
     font-size: $font-size-2xl;
@@ -63,6 +77,12 @@
   align-items: center;
   gap: $space-2;
   flex-wrap: wrap;
+
+  @include tablet-only {
+    width: 100%;
+    gap: $space-2;
+    flex-wrap: wrap;
+  }
 
   @include max-width('md') {
     width: 100%;
@@ -128,6 +148,13 @@
   @include grid-auto-fit(260px, $space-6);
   margin-bottom: $space-10;
 
+  // Tablet: 2-3 columnas dependiendo del espacio
+  @include tablet-only {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-5;
+    margin-bottom: $space-8;
+  }
+
   @include max-width('md') {
     grid-template-columns: 1fr;
     gap: $space-4;
@@ -141,9 +168,28 @@
 
 .dashboard__charts {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  grid-template-columns: 1fr;
   gap: $space-6;
   margin-bottom: $space-10;
+
+  // Tablet landscape: 1 columna
+  @include respond-to('lg') {
+    grid-template-columns: 1fr;
+    gap: $space-6;
+  }
+
+  // Desktop XL: 1 columna (full width siempre)
+  @include respond-to('xl') {
+    grid-template-columns: 1fr;
+    gap: $space-6;
+  }
+
+  // Tablet portrait: 1 columna
+  @include tablet-only {
+    grid-template-columns: 1fr;
+    gap: $space-5;
+    margin-bottom: $space-8;
+  }
 
   @include max-width('lg') {
     grid-template-columns: 1fr;
@@ -188,6 +234,10 @@
     }
   }
 
+  @include tablet-only {
+    padding: $space-5;
+  }
+
   @include max-width('md') {
     padding: $space-5;
   }
@@ -197,6 +247,12 @@
   @include flex-between;
   margin-bottom: $space-6;
   gap: $space-4;
+
+  @include tablet-only {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: $space-5;
+  }
 }
 
 .dashboard__chart-title {
@@ -220,6 +276,10 @@
   min-height: 280px;
   z-index: 1;
 
+  @include tablet-only {
+    min-height: 240px;
+  }
+
   @include max-width('md') {
     min-height: 220px;
   }
@@ -237,6 +297,10 @@
     margin-bottom: $space-3;
     opacity: 0.4;
   }
+
+  @include tablet-only {
+    min-height: 240px;
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -244,8 +308,16 @@
 // ═══════════════════════════════════════════════════════════════════
 
 .dashboard__stats {
-  @include grid-auto-fit(280px, $space-6);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $space-6;
   margin-bottom: $space-10;
+
+  // Tablet: 2 columnas
+  @include tablet-only {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-5;
+  }
 
   @include max-width('md') {
     grid-template-columns: 1fr;
@@ -298,6 +370,10 @@
 
   &--error::before {
     background: linear-gradient(90deg, $color-error, lighten($color-error, 10%));
+  }
+
+  @include tablet-only {
+    padding: $space-5;
   }
 }
 
@@ -354,6 +430,10 @@
   line-height: $line-height-tight;
   color: $color-text-primary;
   letter-spacing: $letter-spacing-tight;
+
+  @include tablet-only {
+    font-size: $font-size-2xl;
+  }
 
   @include max-width('md') {
     font-size: $font-size-2xl;
@@ -448,6 +528,10 @@
   padding: $space-6;
   margin-bottom: $space-10;
 
+  @include tablet-only {
+    padding: $space-5;
+  }
+
   @include max-width('md') {
     padding: $space-5;
   }
@@ -484,6 +568,11 @@
 
   &:last-child {
     border-bottom: none;
+  }
+
+  @include tablet-only {
+    gap: $space-3;
+    padding: $space-3;
   }
 }
 

@@ -1,4 +1,4 @@
-import { Component, signal, ChangeDetectionStrategy, inject, OnInit } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy, inject, OnInit, HostListener, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotificationService, Toast } from '../../../services/notification.service';
 import { ThemeService } from '../../../services/theme.service';
@@ -19,6 +19,8 @@ export class NavbarComponent implements OnInit {
   notificationService = inject(NotificationService);
   themeService = inject(ThemeService);
 
+  @Output() onMenuClick = new EventEmitter<void>();
+
   showNotifications = signal(false);
   recentToasts = signal<Toast[]>([]);
   notificationCount = signal(0);
@@ -34,11 +36,30 @@ export class NavbarComponent implements OnInit {
   }
 
   /**
+   * Close notifications when clicking outside
+   */
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    const notificationsPanel = document.querySelector('.navbar__notifications');
+    const notificationBtn = document.querySelector('.navbar__action:nth-child(1)');
+
+    if (
+      notificationsPanel &&
+      !notificationsPanel.contains(target) &&
+      notificationBtn &&
+      !notificationBtn.contains(target) &&
+      this.showNotifications()
+    ) {
+      this.showNotifications.set(false);
+    }
+  }
+
+  /**
    * Toggle sidebar visibility
    */
   toggleSidebar(): void {
-    const sidebar = document.querySelector('.sidebar');
-    sidebar?.classList.toggle('is-open');
+    this.onMenuClick.emit();
   }
 
   /**

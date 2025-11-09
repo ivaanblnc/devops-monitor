@@ -37,14 +37,29 @@
     }
   }
 
-  @media (max-width: 768px) {
+  // Desktop: always visible
+  @include respond-to('lg') {
+    // Visible by default
+  }
+
+  // Tablet landscape and below: mobile drawer behavior
+  @include max-width('lg') {
     transform: translateX(-100%);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: $shadow-xl;
+    height: 100vh;
+    width: 240px;
+    top: 60px; // Account for navbar
+    max-height: calc(100vh - 60px);
 
     &.is-open {
       transform: translateX(0);
     }
+  }
+
+  // Tablet portrait: adjust width slightly if needed
+  @include tablet-only {
+    width: 220px;
   }
 }
 

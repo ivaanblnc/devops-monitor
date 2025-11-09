@@ -15,8 +15,10 @@
   height: 100vh;
   width: 100%;
   background: var(--color-bg-primary);
+  position: relative;
 
-  @media (max-width: 768px) {
+  // Tablet portrait: hide sidebar, show navbar
+  @include max-width('lg') {
     height: auto;
     min-height: 100vh;
   }
@@ -28,9 +30,10 @@
   flex: 1;
   overflow: hidden;
   margin-left: var(--app-sidebar-width);
-  transition: margin-left $transition-base;
+  transition: margin-left $transition-slow cubic-bezier(0.4, 0, 0.2, 1);
 
-  @media (max-width: 768px) {
+  // Tablet portrait: remove left margin
+  @include max-width('lg') {
     margin-left: 0;
   }
 }
@@ -40,9 +43,10 @@
   overflow-y: auto;
   overflow-x: hidden;
   margin-top: 0;
-  transition: margin-top $transition-base;
+  transition: margin-top $transition-slow cubic-bezier(0.4, 0, 0.2, 1);
 
-  @media (max-width: 768px) {
+  // Tablet portrait: add navbar margin
+  @include max-width('lg') {
     margin-top: var(--app-navbar-height);
   }
 
@@ -61,6 +65,31 @@
 
     &:hover {
       background: $color-text-tertiary;
+    }
+  }
+}
+
+// Sidebar overlay for mobile/tablet
+.app-overlay {
+  display: none;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1019;
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+
+  @include max-width('lg') {
+    display: block;
+
+    &.is-visible {
+      opacity: 1;
+      pointer-events: auto;
     }
   }
 }

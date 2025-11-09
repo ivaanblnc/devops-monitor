@@ -9,11 +9,11 @@
   padding: $space-8;
   animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
-  @media (max-width: 768px) {
-    padding: $space-5;
+  @include max-width('lg') {
+    padding: $space-6;
   }
 
-  @media (max-width: 480px) {
+  @include max-width('md') {
     padding: $space-4;
   }
 }
@@ -28,7 +28,12 @@
   margin-bottom: $space-8;
   gap: $space-4;
 
-  @media (max-width: 768px) {
+  @include tablet-only {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  @include max-width('md') {
     flex-direction: column;
     align-items: flex-start;
   }
@@ -40,7 +45,11 @@
     color: $color-text-primary;
     letter-spacing: -0.02em;
 
-    @media (max-width: 768px) {
+    @include tablet-only {
+      font-size: 1.75rem;
+    }
+
+    @include max-width('md') {
       font-size: 1.75rem;
     }
   }
@@ -73,15 +82,27 @@
 
 .alerts__stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: $space-4;
   margin-bottom: $space-8;
+  width: 100%;
 
-  @media (max-width: 640px) {
-    grid-template-columns: repeat(2, 1fr);
+  @include tablet-only {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: $space-2;
   }
 
-  @media (max-width: 480px) {
+  @include max-width('lg') {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-4;
+  }
+
+  @include max-width('md') {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-3;
+  }
+
+  @include max-width('sm') {
     grid-template-columns: 1fr;
   }
 }
@@ -92,6 +113,14 @@
   border-radius: $radius-lg;
   border: 1px solid $color-border;
   transition: border-color 0.2s ease, transform 0.2s ease;
+
+  @include tablet-only {
+    padding: $space-4 $space-3;
+  }
+
+  @include max-width('md') {
+    padding: $space-4;
+  }
 
   &:hover {
     border-color: $color-border-hover;
@@ -105,6 +134,10 @@
   color: $color-text-secondary;
   margin-bottom: $space-2;
   font-weight: 500;
+
+  @include tablet-only {
+    font-size: 0.75rem;
+  }
 }
 
 .alerts__stat-value {
@@ -114,6 +147,10 @@
   color: $color-text-primary;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
+
+  @include tablet-only {
+    font-size: 1.5rem;
+  }
 
   &--active {
     color: $color-accent;

@@ -1,4 +1,4 @@
-<aside class="sidebar">
+<aside class="sidebar" [class.is-open]="isOpen">
   <!-- Logo Section -->
   <div class="sidebar__logo">
     <div class="sidebar__logo-icon">📊</div>
@@ -14,7 +14,8 @@
       <a
         class="sidebar__nav-item"
         [routerLink]="item.path"
-        routerLinkActive="sidebar__nav-item--active">
+        routerLinkActive="sidebar__nav-item--active"
+        (click)="handleNavigation()">
         <span class="sidebar__nav-icon">{{ item.icon }}</span>
         <span class="sidebar__nav-label">{{ item.label }}</span>
       </a>

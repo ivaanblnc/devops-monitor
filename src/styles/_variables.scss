@@ -239,15 +239,19 @@ $easing-ease-out: cubic-bezier(0.0, 0, 0.2, 1);
 $easing-ease-in: cubic-bezier(0.4, 0, 1, 1);
 
 // ═══════════════════════════════════════════════════════════════════
-// BREAKPOINTS
+// BREAKPOINTS - RESPONSIVE DESIGN
 // ═══════════════════════════════════════════════════════════════════
 
-$breakpoint-xs: 320px;
-$breakpoint-sm: 480px;
-$breakpoint-md: 768px;
-$breakpoint-lg: 1024px;
-$breakpoint-xl: 1280px;
-$breakpoint-2xl: 1536px;
+$breakpoint-xs: 320px;    // Extra small (mobile)
+$breakpoint-sm: 480px;    // Small (mobile landscape)
+$breakpoint-md: 768px;    // Medium (tablet portrait)
+$breakpoint-lg: 1024px;   // Large (tablet landscape / small desktop)
+$breakpoint-xl: 1280px;   // Extra large (desktop)
+$breakpoint-2xl: 1536px;  // 2XL (large desktop)
+
+// Tablet-specific breakpoints (for finer control)
+$breakpoint-tablet-portrait: 768px;
+$breakpoint-tablet-landscape: 1024px;
 
 // ═══════════════════════════════════════════════════════════════════
 // Z-INDEX SCALE

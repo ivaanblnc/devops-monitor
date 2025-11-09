@@ -17,7 +17,7 @@
   z-index: 1020;
   backdrop-filter: blur(8px);
 
-  @media (max-width: 768px) {
+  @include max-width('lg') {
     display: flex;
     align-items: center;
     justify-content: space-between;

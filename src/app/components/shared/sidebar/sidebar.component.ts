@@ -1,4 +1,4 @@
-import { Component, signal, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy, inject, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ThemeService } from '../../../services/theme.service';
@@ -24,6 +24,10 @@ interface NavItem {
 export class SidebarComponent {
   themeService = inject(ThemeService);
 
+  @Input() isOpen = false;
+  @Output() onToggleSidebar = new EventEmitter<void>();
+  @Output() onNavigate = new EventEmitter<void>();
+
   navItems: NavItem[] = [
     { label: 'Dashboard', path: '/dashboard', icon: '📊' },
     { label: 'Servers', path: '/servers', icon: '🖥️' },
@@ -37,5 +41,12 @@ export class SidebarComponent {
    */
   toggleTheme(): void {
     this.themeService.toggleTheme();
+  }
+
+  /**
+   * Handle navigation
+   */
+  handleNavigation(): void {
+    this.onNavigate.emit();
   }
 }

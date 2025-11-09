@@ -34,7 +34,6 @@ export class LogsComponent implements OnInit, OnDestroy {
   selectedLevels = signal<string[]>(['debug', 'info', 'warn', 'error']);
   selectedServer = '';
   searchTerm = '';
-  autoScroll = true;
   currentPage = signal(1);
   expandedLogs = signal<number[]>([]);
   newLogsCount = signal(0);

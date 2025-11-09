@@ -26,6 +26,9 @@ import { NotificationService } from '../../services/notification.service';
 export class SettingsComponent implements OnInit {
   private notificationService = inject(NotificationService);
 
+  // Current date for date format preview
+  currentDate = signal(new Date());
+
   // Sections open state
   sectionsOpen = signal({
     general: true,

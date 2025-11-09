@@ -6,11 +6,13 @@ import {
   effect,
   viewChild,
   AfterViewInit,
+  inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
 import { Chart as ChartJS, registerables } from 'chart.js';
 import { ChartData } from '../../../models/chart-data.model';
+import { ThemeService } from '../../../services/theme.service';
 
 // Register ChartJS components
 ChartJS.register(...registerables);
@@ -32,6 +34,8 @@ export class ChartComponent implements AfterViewInit {
   type = input<'line' | 'bar'>('line');
   height = input<number>(300);
 
+  themeService = inject(ThemeService);
+
   chart = viewChild(BaseChartDirective);
   chartData = signal<any>(this.getChartConfig());
 
@@ -40,6 +44,14 @@ export class ChartComponent implements AfterViewInit {
       // Update chart whenever input data changes
       this.chartData.set(this.getChartConfig());
       // Trigger chart update
+      if (this.chart()) {
+        this.chart()?.chart?.update();
+      }
+    });
+
+    // Update chart when theme changes
+    effect(() => {
+      this.themeService.isDarkMode(); // Track theme changes
       if (this.chart()) {
         this.chart()?.chart?.update();
       }
@@ -82,6 +94,10 @@ export class ChartComponent implements AfterViewInit {
    * Get Chart.js options
    */
   getChartOptions(): any {
+    const isDark = this.themeService.isDarkMode();
+    const textColor = isDark ? '#ffffff' : '#1a1a1a';
+    const gridColor = isDark ? '#404040' : '#e5e5e5';
+
     return {
       responsive: true,
       maintainAspectRatio: true,
@@ -94,7 +110,7 @@ export class ChartComponent implements AfterViewInit {
           display: this.data().datasets.length > 1,
           position: 'bottom' as const,
           labels: {
-            color: 'var(--color-text-secondary)',
+            color: textColor,
             font: {
               size: 13,
               weight: '500',
@@ -109,10 +125,10 @@ export class ChartComponent implements AfterViewInit {
           enabled: true,
           mode: 'index' as const,
           intersect: false,
-          backgroundColor: 'var(--color-bg-overlay)',
-          titleColor: 'var(--color-text-primary)',
-          bodyColor: 'var(--color-text-secondary)',
-          borderColor: 'var(--color-border)',
+          backgroundColor: 'rgba(255, 255, 255, 0.95)',
+          titleColor: '#1a1a1a',
+          bodyColor: '#1a1a1a',
+          borderColor: '#e5e5e5',
           borderWidth: 1,
           titleFont: {
             size: 13,
@@ -137,12 +153,12 @@ export class ChartComponent implements AfterViewInit {
         y: {
           beginAtZero: true,
           grid: {
-            color: 'var(--color-border-subtle)',
+            color: gridColor,
             drawBorder: false,
             lineWidth: 1,
           },
           ticks: {
-            color: 'var(--color-text-tertiary)',
+            color: textColor,
             font: {
               size: 12,
               weight: 500,
@@ -155,7 +171,7 @@ export class ChartComponent implements AfterViewInit {
             display: false,
           },
           ticks: {
-            color: 'var(--color-text-tertiary)',
+            color: textColor,
             font: {
               size: 12,
               weight: 500,
